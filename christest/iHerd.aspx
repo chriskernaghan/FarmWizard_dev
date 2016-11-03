@@ -2514,26 +2514,54 @@ function readOneTag()
                                     </div>
                                 </asp:Panel>
 
-                                <div class="row navigation-tiles">
+                                <div class="row all-tiles">
 
                                   <div class="col s6">
-                                    <div class="tile-navigation">
+                                  <a href="#">
+                                    <div class="tile-navigation tile001">
+                                      <h5>Main Section 1</h5>
                                     </div>
+                                  </a>
                                   </div>
                                   
                                   <div class="col s6">
-                                    <div class="tile-navigation">
+                                  <a href="#">
+                                    <div class="tile-navigation tile002">
+                                       <h5>Main Section 2</h5>
                                     </div>
+                                    </a>
                                   </div>
                                   
                                   <div class="col s6">
-                                    <div class="tile-navigation">
+                                  <a href="#">
+                                    <div class="tile-navigation tile003">
+                                      <h5>Main Section 3</h5>
                                     </div>
+                                  </a>
                                   </div>
                                   
                                   <div class="col s6">
-                                    <div class="tile-navigation">
+                                  <a href="#">
+                                    <div class="tile-navigation tile004">
+                                      <h5>Main Section 4</h5>
                                     </div>
+                                  </a>
+                                  </div>
+
+                                  <div class="col s6">
+                                  <a href="#">
+                                    <div class="tile-navigation tile005">
+                                      <h5>Main Section 5</h5>
+                                    </div>
+                                  </a>
+                                  </div>
+                                  
+                                  <div class="col s6">
+                                  <a href="#">
+                                    <div class="tile-navigation tile006">
+                                      <h5>Main Section 6</h5>
+                                    </div>
+                                  </a>
                                   </div>
 
                                 </div>
