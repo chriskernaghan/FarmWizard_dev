@@ -9,6 +9,26 @@
         <div class="panel-heading" role="tab">
             <div class="row">
                 <div class="form-group col-xs-6">
+                    <div class="input-group input-field">
+                        <b>Select animal :</b>
+                        <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search animal" />
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                            <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">--%>
+                            <input type="date" name="DoneDateText" id="inputdate" class="">
+                            <div class="form-group">
+                                <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
+                                <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>--%>
+                                <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-xs-6">
                     <strong>
                         <asp:Label ID="Label33" runat="server" Font-Bold="True"><%=Master.Mother%> EID :</asp:Label>
                     </strong>
@@ -112,6 +132,9 @@
                     </p>
                     <asp:TextBox ID="CalvingName" runat="server" class="form-control input-sm" MaxLength="40" Height="32px"></asp:TextBox>
                 </div>
+            </div>
+            
+                <asp:Panel ID="BES_Panel" runat="server">
                 <div class="form-group col-xs-6">
                     <p>
                         <strong>
@@ -129,7 +152,6 @@
                         <asp:ListItem Value="StillBorn">Still Born</asp:ListItem>
                     </n0:MOBILEDROPDOWNLIST>
                 </div>
-            </div>
             <div class="row">
                 <div class="form-group col-xs-6">
                     <p>
@@ -158,6 +180,8 @@
                     </n0:MOBILEDROPDOWNLIST>
                 </div>
             </div>
+            </asp:Panel>
+
             <div class="row">
                 <div class="form-group col-xs-6">
                     <p>
@@ -219,109 +243,7 @@
                 </div>
             </div>
         </div>
-        <div align="center">
-            <a href="#" class="btn btn-primary waves-effect waves-light" onclick="checkInput();">Save Birth</a>
-        </div>
-
-        <td valign="top"></td>
-
-    </div>
-       </asp:Panel>
-    
-    
-    <asp:Panel ID="BirthEIDPanel" Visible="false" runat="server">
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab">
-            <div class="row">
-                <div class="form-group col-xs-6">
-                    <strong><asp:Label ID="Label6789" runat="server" Font-Bold="True"><%=Master.Mother%> EID :</asp:Label></strong>
-                    <asp:TextBox ID="DamEIDTag" runat="server" readonly="true" CssClass="form-control" MaxLength="20"></asp:TextBox>
-                </div>
-                <div class="form-group col-xs-6">
-                    <strong><asp:Label ID="Label27" runat="server" Font-Bold="True">Visible Tag :</asp:Label></strong>
-                    <asp:TextBox ID="DamNationalID" CssClass="form-control" runat="server" MaxLength="20"></asp:TextBox>
-                </div>
-            </div>
-            <span id="MgmtTag">_</span>
-            <div class="row">
-                <div class="form-group col-xs-6">
-                    <strong><asp:Label ID="Label28" runat="server" Font-Bold="True">Birth Diff :</asp:Label></strong>
-
-                    <n0:MOBILEDROPDOWNLIST class="form-control" id="EIDBirthDifficulty" runat="server" EnableViewState="False">
-                        <asp:ListItem Value="0">No Assist</asp:ListItem>
-                        <asp:ListItem Value="1">Moderate Farm Assist</asp:ListItem>
-                        <asp:ListItem Value="2">Moderate Vet Assist</asp:ListItem>
-                        <asp:ListItem Value="3">Difficult Farmer Assist</asp:ListItem>
-                        <asp:ListItem Value="4">Difficult Vet Assist</asp:ListItem>
-                        <asp:ListItem Value="5">Ceasarian</asp:ListItem>
-                        <asp:ListItem Value="6">Still Born</asp:ListItem>
-                    </n0:MOBILEDROPDOWNLIST>
-                </div>
-                <div class="form-group col-xs-6">
-                    <strong><asp:Label ID="Label29" runat="server" Font-Bold="True">Aft Birth :</asp:Label></strong>
-
-
-                    <n0:MOBILEDROPDOWNLIST class="form-control" id="EIDAfterBirthDelivered" runat="server" EnableViewState="False">
-                        <asp:ListItem Value="No">No</asp:ListItem>
-                        <asp:ListItem Value="Yes" Selected="True">Yes</asp:ListItem>
-                    </n0:MOBILEDROPDOWNLIST>
-                </div>
-            </div>
-
-            <div align="center">
-
-                <a href="#" id="ReadLambs" class="btn btn-primary waves-effect waves-light" onclick="readBTTags(1);">Read <%=Master.Child%> Tags</a>
-            </div>
-
-
-            <table class="dataGrid" align="center" id="LambTable" style="font-family: Times New Roman; border-collapse: collapse" cellspacing="0" rules="all" border="1">
-                <tbody>
-                    <tr style="font-weight: bold; color: white; background-color: #ffcc66">
-                        <td id="T1">
-                            <%=Master.Child%></td>
-                        <td id="T2">Male?</td>
-                        <td id="T3">Wght</td>
-                        <td id="T4">Lmbing Ease</td>
-                        <td id="T5">Vigr</td>
-                        <td id="T6">InTrn Eyes</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="row">
-                <div class="form-group col-xs-6">
-                    <strong><%=Master.Child%>Breed :</strong>
-
-                    <n0:MOBILEDROPDOWNLIST class="form-control" id="LambBreed" runat="server" DataValueField="ShortBreed" DataTextField="DisplayText"></n0:MOBILEDROPDOWNLIST>
-                </div>
-                <div class="form-group col-xs-6">
-                    <asp:CheckBox ID="BirthCrossCheckBox" runat="server" Text="Is Cross?" Font-Bold="True"></asp:CheckBox>
-                    <strong>Stillborns :</strong>
-                    <n0:MOBILEDROPDOWNLIST class="form-control" id="Fatalities" runat="server" EnableViewState="False">
-                        <asp:ListItem Value="0" Selected="True">0</asp:ListItem>
-                        <asp:ListItem Value="1">1</asp:ListItem>
-                        <asp:ListItem Value="2">2</asp:ListItem>
-                        <asp:ListItem Value="3">3</asp:ListItem>
-                    </n0:MOBILEDROPDOWNLIST>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-xs-6">
-                    <strong><%=Master.Father%> :</strong>
-
-                    <n0:MOBILEDROPDOWNLIST class="form-control" id="RamTag" runat="server" DataValueField="SireNationalID" DataTextField="SireDisplay"></n0:MOBILEDROPDOWNLIST>
-
-                </div>
-            </div>
-            <div align="center">
-                <br></br>
-                <a href="#" id="AddLambing" class="btn btn-primary waves-effect waves-light" onclick="addLambing('<%=Master.herdID%> ');">Add Birth</a>
-            </div>
-        </div>
-    </div>
-</asp:Panel>
-    
-    
+            
     <asp:Panel ID="HolsteinPanel" runat="server">
         <div class="row">
             <div class="form-group col-xs-12">    
@@ -455,6 +377,16 @@
         </div>
     </asp:Panel>
     
+
+        <div align="center">
+            <a href="#" class="btn btn-primary waves-effect waves-light" onclick="checkInput();">Save Birth</a>
+        </div>
+
+        <td valign="top"></td>
+
+    </div>
+       </asp:Panel>
+    
     <script type = "text/javascript">
 
         //
@@ -464,14 +396,12 @@
         function checkInput() 
         {
             var pType = "EIDCalving";
-            var isEID = "<%=Master.IsEID%>";
             var alwaysConfirmFlag = "<%=Master.AlwaysConfirmFlag%>";
 
             var getLocation = false;
 
             document.forms[0].HidAnimalsToAdd.value = ""; // need to clear this
 
-            if (isEID == 1) 
             {            
                 // Remove the calf nationalID
                 // Taking this out for now
@@ -551,17 +481,17 @@
                 //if (getLocation == true)
                 //    WriteFormValuesWithLocation("iQuickAdd.aspx?Type=Add" + pType  + "&HerdID=" + HerdID + "&IsEID=" + isEID, document.forms[0], document.forms[0].HidTitle.value);
                 //else
-                WriteFormValues("iQuickAdd.aspx?Type=Add" + pType  + "&HerdID=" + HerdID + "&IsEID=" + isEID, document.forms[0], document.forms[0].HidTitle.value);
+                WriteFormValues("CalvingPage.aspx?Type=Add" + pType  + "&HerdID=" + HerdID, document.forms[0], document.forms[0].HidTitle.value);
                 var msg = pType + " has been recorded and will be transferred at next synchronisation";
 
-                if (isEID != 1) 
-                {
-                    App.alert("Result", msg);
-                }
-                else  {
+                //if (isEID != 1) 
+                //{
+                //    App.alert("Result", msg);
+                //}
+                //else  {
                     App.message(msg); 
                     document.getElementById("form1").reset();
-                }  
+                //}  
         
             }
             // Always return false so that for doesnt get submitted
@@ -994,9 +924,6 @@
 
         function initPage() 
         {
-            
-            var isEID = "<%=Master.IsEID%>";
-
             db = OpenDatabase();
             if (!db) {
                 App.alert("Database", "Cannot open database");
@@ -1011,10 +938,10 @@
             btRetries = 0;
             isCommitted = 0;
             // Widen the data entry box if its a wide screen
-            if (isEID == 0) {
-                var theTextBox = document.getElementById("filterInput");
-                //   theTextBox.style["width"] = "220px";
-            } 
+            //if (isEID == 0) {
+            //    var theTextBox = document.getElementById("filterInput");
+            //    //   theTextBox.style["width"] = "220px";
+            //} 
             SetDates("EIDCalving");
             HerdID = sessionStorage.getItem('HerdID');
             var herdName = sessionStorage.getItem('HerdName');
@@ -1046,6 +973,11 @@
                 FillDynamicList("<%=CalvingNaturalSireList.ClientID%>", "BullBirthEarTag", HerdID, 0, "N/A");              
                         
             //}
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Record Calving");
+            //
         }
 
 

@@ -1831,28 +1831,32 @@
                 string exceptionString = "";
                 string scoreString = "";
                 string groupText = "";
-                if (isSheep)
+
+                if (dv[i]["Group"].ToString().Trim() != "")
                 {
-                    // We add a couple of extra fields only for sheep
-                    if (dv[i]["Group"].ToString().Trim() != "")
+                    if (isSheep)
                     {
+                        // We add a couple of extra fields only for sheep
                         ramsDv.RowFilter = string.Format("Group = {0}", dv[i]["Group"].ToString().Trim());
-                        DataAccess da = new DataAccess();
-                        string where = string.Format("ID = {0}", dv[i]["Group"].ToString().Trim());
-                        da.LoadDatabaseTable("InternalHerdID", herdID, where, "GroupName");
-                        if (da.ds.Tables[0].Rows.Count != 0)
-                        {
-                            groupText = da.ds.Tables[0].Rows[0]["Name"].ToString();
-                        }
+
                         if (ramsDv.Count > 0)
                         {
                             dv[i]["LastServedTo"] = ramsDv[0]["NationalID"].ToString().Trim();
                         }
                     }
 
-                    // exceptionString = formatExceptionString(dv[i]["NationalID"].ToString().Trim(), herdID);
-                    //scoreString = formatScoreString((long)dv[i]["InternalAnimalID"]);
+                    DataAccess da = new DataAccess();
+                    string where = string.Format("ID = {0}", dv[i]["Group"].ToString().Trim());
+                    da.LoadDatabaseTable("InternalHerdID", herdID, where, "GroupName");
+                    if (da.ds.Tables[0].Rows.Count != 0)
+                    {
+                        groupText = da.ds.Tables[0].Rows[0]["Name"].ToString();
+                    }
                 }
+
+                // exceptionString = formatExceptionString(dv[i]["NationalID"].ToString().Trim(), herdID);
+                //scoreString = formatScoreString((long)dv[i]["InternalAnimalID"]);
+
 
                 string withdrawalDateStr = "";
                 string vetTreatString = "";

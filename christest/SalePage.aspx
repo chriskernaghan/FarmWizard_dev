@@ -9,6 +9,12 @@
         <div class="panel-heading" role="tab">
             <div class="row">
                 <div class="form-group col-xs-6">
+                    <div class="input-group input-field">
+                        <b>Select animal :</b>
+                        <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search animal" />
+                    </div>
+                </div>
+                <div class="form-group col-xs-6">
 
                     <b><asp:Label ID="SaleLabel" runat="server" Font-Bold="True">Sold to:</asp:Label></b>
 
@@ -28,7 +34,20 @@
                 <asp:CheckBox ID="BcmsSaleCheckBox" runat="server" Width="200px" Text="Register with BCMS" Font-Bold="True"></asp:CheckBox>
 
             </div>
-
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                        <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">--%>
+                        <input type="date" name="DoneDateText" id="inputdate" class="">
+                        <div class="form-group">
+                            <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
+                            <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>--%>
+                            <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div align="center">
                 <a href="#" class="btn btn-primary waves-effect waves-light" onclick="checkInput();">Save Sale</a>
@@ -461,7 +480,13 @@
                 {
                 document.getElementById('ReadMotherTag').style.display = 'none';
                 }
-            }    
+            }
+
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Record Sale");
+            //
         }
 
 

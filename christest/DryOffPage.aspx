@@ -9,9 +9,15 @@
         <div class="panel-heading" role="tab">
             <div class="row">
                 <div class="form-group col-xs-6">
+                    <div class="input-group input-field">
+                        <b>Select animal :</b>
+                        <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search animal" />
+                    </div>
+                </div>
+                <div class="form-group col-xs-6">
                     <strong>
                         <asp:Label ID="Label30" runat="server">MED 1 :</asp:Label></strong>
-                    <n0:MOBILEDROPDOWNLIST class="form-control" id="MedicalTreatment" runat="server" EnableViewState="False"></n0:MOBILEDROPDOWNLIST>
+                    <n0:MobileDropDownList class="form-control" ID="MedicalTreatment" runat="server" EnableViewState="False"></n0:MobileDropDownList>
 
 
                 </div>
@@ -19,7 +25,7 @@
                     <strong>
                         <asp:Label ID="Label26" runat="server">No of Tubes :</asp:Label></strong>
 
-                    <n0:MOBILEDROPDOWNLIST class="form-control" id="TubeNumber" runat="server" EnableViewState="False">
+                    <n0:MobileDropDownList class="form-control" ID="TubeNumber" runat="server" EnableViewState="False">
                         <asp:ListItem Value="1">01</asp:ListItem>
                         <asp:ListItem Value="2">02</asp:ListItem>
                         <asp:ListItem Value="3">03</asp:ListItem>
@@ -30,12 +36,26 @@
                         <asp:ListItem Value="8">08</asp:ListItem>
                         <asp:ListItem Value="9">09</asp:ListItem>
                         <asp:ListItem Value="10">10</asp:ListItem>
-                    </n0:MOBILEDROPDOWNLIST>
+                    </n0:MobileDropDownList>
                 </div>
             </div>
         </div>
 
         <asp:CheckBox ID="NoMedicineDryOff" runat="server" Width="300px" Font-Bold="True" Text="Click to dry with no med"></asp:CheckBox>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                    <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">--%>
+                    <input type="date" name="DoneDateText" id="inputdate" class="">
+                    <div class="form-group">
+                        <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
+                        <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>--%>
+                        <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div align="center">
             <a href="#" class="btn btn-primary waves-effect waves-light" onclick="checkInput();">Save Dry Off</a>
 
@@ -389,6 +409,11 @@
                 }
  
             }
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Record Dry Off");
+            //
         }
 
 

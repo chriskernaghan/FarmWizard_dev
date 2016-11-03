@@ -318,6 +318,30 @@ App.disconnectBT = function () {
 }
 
 /**
+ * Requests a disconnection of all bluetooth devices by type
+ * will reply by calling JS function AppDeviceDisconnected
+ * @param {text} type The type of the device - weigher / reader. 
+ */
+App.disconnectBTType = function (type) {
+    if (android_app)
+        AndroidJS.DisconnectBTType(type);
+    else if (ios_app)
+        location.href = "hybrid:disconnectbttype?type=" + type;
+    else {
+        if (android) {
+            //try chrome bluetooth!?
+            //bluetooth not available
+            //play store link?
+        }
+        if (ios) {
+            //bluetooth not available
+            //app store link?
+        }
+    }
+    return false;
+}
+
+/**
  * Sends a request to the app to read the text aloud.
  *
  * @param {text} text The desired text to read aloud.

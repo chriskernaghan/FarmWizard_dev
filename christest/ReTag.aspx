@@ -6,21 +6,40 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="panel panel-default">
-         <div class="row">
-                    <div class="form-group col-xs-6">
-                        <b>New EID:</b>
-                        <asp:TextBox ID="EIDMatch" runat="server" class="form-control" MaxLength="20"></asp:TextBox>
-                    </div>
-                    <div class="form-group col-xs-6">
-                        <b>Existing Tag:</b>
-
-                        <asp:TextBox ID="NationalIDTagMatch" runat="server" class="form-control" MaxLength="20"></asp:TextBox>
+        <div class="row">
+            <div class="form-group col-xs-6">
+                <div class="input-group input-field">
+                    <b>Select animal :</b>
+                    <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search animal" />
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                        <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">--%>
+                        <input type="date" name="DoneDateText" id="inputdate" class="">
+                        <div class="form-group">
+                            <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
+                            <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>--%>
+                            <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                        </div>
                     </div>
                 </div>
-                <br />
-                <div align="center">
-                    <input class="btn btn-primary waves-effect waves-light" type="button" onclick="checkInput()" value="Record Match/Retag" />
-                </div>
+            </div>
+            <div class="form-group col-xs-6">
+                <b>New EID:</b>
+                <asp:TextBox ID="EIDMatch" runat="server" class="form-control" MaxLength="20"></asp:TextBox>
+            </div>
+            <div class="form-group col-xs-6">
+                <b>Existing Tag:</b>
+                <asp:TextBox ID="NationalIDTagMatch" runat="server" class="form-control" MaxLength="20"></asp:TextBox>
+            </div>
+        </div>
+        <br />
+        <div align="center">
+            <input class="btn btn-primary waves-effect waves-light" type="button" onclick="checkInput()" value="Record Match/Retag" />
+        </div>
     </div>
 
     <script type = "text/javascript">
@@ -543,6 +562,11 @@
                 document.getElementById('ReadMotherTag').style.display = 'none';
             }
         }
+            //
+        var searchInput = document.getElementById("CowNumber");
+        searchInput.disabled = true;
+        changeSearchPlaceHolder("Retag animal");
+            //
         }
     </script>
 

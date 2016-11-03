@@ -9,6 +9,12 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="form-group col-xs-6">
+                    <div class="input-group input-field">
+                        <b>Select animal :</b>
+                        <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search animal" />
+                    </div>
+                </div>
+                <div class="form-group col-xs-6">
                     <strong>Medication 1 :</strong>
                     <n0:MOBILEDROPDOWNLIST class="form-control" id="MedTreatment" runat="server"></n0:MOBILEDROPDOWNLIST>
                 </div>
@@ -769,6 +775,12 @@
                     document.getElementById('ReadMotherTag').style.display = 'none';
                 }
             }
+
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Record Treatment");
+            //
         }
 
 

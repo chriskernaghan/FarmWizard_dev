@@ -9,6 +9,26 @@
         <div class="panel-heading" role="tab">
             <div class="row">
                 <div class="form-group col-xs-6">
+                    <div class="input-group input-field">
+                        <b>Select animal :</b>
+                        <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search animal" />
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                            <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">--%>
+                            <input type="date" name="DoneDateText" id="inputdate" class="">
+                            <div class="form-group">
+                                <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
+                                <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>--%>
+                                <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-xs-6">
                     <n0:MOBILEDROPDOWNLIST class="form-control" id="StillBornNotes" runat="server"></n0:MOBILEDROPDOWNLIST>
                 </div>
             </div>
@@ -22,7 +42,8 @@
                     <asp:CheckBox ID="FullTermCheckBox" runat="server" Text="Cow within 20 days of term" Checked="True"></asp:CheckBox>
                 </div>
             </div>
-        </div>      
+        </div>
+        
         <br />     
         <div align="center">
             <div class="row">
@@ -85,30 +106,23 @@
             //    //removeOptions(document.getElementById("CalfEarTag"));              
             //    var animals = document.getElementById("EIDAnimalList").options;
             //    var count = animals.length;
-
             //    if (count == 0) {
             //        App.message("No animals scanned : Please Scan EID");
             //        return false;
             //    }
-
             //    var animalList = "";
-            //    //  alert("check process "+  document.forms[0].NFCID.value);
-            
-
+            //    //  alert("check process "+  document.forms[0].NFCID.value);           
             //    for (var k = 0; k < count; k++) {
             //        if (k > 0) {
             //            animalList += ",";
             //        }
             //        animalList = animalList + animals[k].value;
             //    }
-
             //    document.forms[0].HidAnimalList.value = animalList;
             //    animals.length = 0;
             //    //document.forms[0].Count.value = "";
-
             //    document.forms[0].HidTitle.value = "Recorded " + pType + " animals";                             
             //}
-
             // document.forms[0].NFCID.value="787000853605892(982000175198006)";
             if(document.getElementById("filterInput") && document.getElementById("filterInput").value) 
             {
@@ -173,28 +187,7 @@
 			
 			var msg = pType + " has been recorded and will be transferred at next synchronisation";
 
-			if("<%=Master.HandsFree%>" != "") 
-			{
-				if ("<%=Master.IsMulti%>" == "true")
-				{
-					AsyncAndroid.ConvertTextToVoicePromptResponse("Do you want to continue Please Say Yes or No ?");
-					var  voiceRespM = AsyncAndroid.GetVoiceCommand();
-					if (voiceRespM != "no")
-					{
-
-					}
-					else {
-						AsyncAndroid.ConvertTextToVoice(msg);
-						setTimeout(function(){ returnToMain();},1000);
-					}
-				}
-				else
-				{
-					AsyncAndroid.ConvertTextToVoice(msg);
-					setTimeout(function(){ returnToMain();},2000);
-				}
-			}
-			else if (isEID != 1) 
+			if (isEID != 1) 
 			{
 				App.alert("Record Added", msg);
 			}
@@ -213,8 +206,7 @@
             document.getElementById("form1").reset();
 
             return true;
-        }// submit
-		
+        }// submit		
 		
 		
 		function confirmRecord(pId, pValue)
@@ -228,6 +220,7 @@
                 return true;
             }// else
         }// confirmRecord
+
 
 		function selectAnimal(animal) {
 
@@ -411,6 +404,11 @@
                     document.getElementById('ReadMotherTag').style.display = 'none';
                 }              
             }
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Record Abortion/Stillborn");
+            //
         }
 
 
@@ -549,27 +547,23 @@
         //function readNfcTag(nfcTagNumber)
         //{
         //      var decimal=nfcTagNumber;
-        //      //if (((Master.checkForDuplicate(decimal) == 0)) && (decimal != "") && (decimal.indexOf("NaN") < 0)) {
-                  
+        //      //if (((Master.checkForDuplicate(decimal) == 0)) && (decimal != "") && (decimal.indexOf("NaN") < 0)) {                  
         //          var sql = "SELECT * FROM Cows where (NFCID = '" + decimal +  "'OR ElectronicID='"+ decimal+ "' AND InternalHerdID = " + HerdID + ")";
         //          db.transaction(function(transaction) {
         //              transaction.executeSql(sql, [],
         //                  function(transaction, results) {
         //                      //var listBox = document.getElementById("EIDAnimalList");
-        //                      //var opt = document.createElement("option");
-                              
+        //                      //var opt = document.createElement("option");                              
         //                      // results.rows holds the rows returned by the query
         //                      if (results.rows.length == 1) {
         //                          var row = results.rows.item(0);
-        //                          var skip = false;
-                                 
+        //                          var skip = false;                                 
         //                          if(row.Exception!=''){
         //                              App.alert("Exception", row.Exception);
         //                          }
         //                          if(row.WithdrawalDate!=''){
         //                              alertWithdrawal(row.WithdrawalDate,"Abortion");
-        //                          }
-                                
+        //                          }                                
         //                              if (skip == false) {
         //                                  var exists = false;
         //                                  //
@@ -580,7 +574,6 @@
         //                                      var tbody = table.getElementsByTagName("tbody")[0];
         //                                      rowCount = tbody.rows.length;
         //                                  }
-
         //                                  for (var k = 0; k < rowCount; k++) {
         //                                      var row = table.rows[k];
         //                                      var cells = row.getElementsByTagName("td");
@@ -603,11 +596,9 @@
         //                                      counter.value = listBox.length;
         //                                      addToList(row.ElectronicID, null);
         //                                  }
-        //                              }
-                                     
+        //                              }                                    
         //                          }
-        //                          else {
-                                      
+        //                          else {                                      
         //                          App.message(decimal + " Animal not found");
         //                            }
         //                },
@@ -615,7 +606,6 @@
         //                      App.alert("Error", "Could not read: " + error.message);
         //                  });
         //        });
-
         //    //}
         //}
 

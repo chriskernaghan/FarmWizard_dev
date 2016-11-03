@@ -486,7 +486,12 @@
                 for(var i=0;i<tempArray.length;i++){
                     FillDynamicList("<%=ListSire.ClientID%>", "BullBirthEarTag", tempArray[i], 0);
                     FillDynamicList("<%=SireNationalIDList.ClientID%>", "BullBirthEarTag", tempArray[i], 0);}
-                     
+               
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Scanning");
+            //
         }
 
 

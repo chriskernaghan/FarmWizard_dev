@@ -579,11 +579,11 @@
             //        titleText: ''
             //    });
 
-            // disabling the search feature within the navigation menu
+            //
             var searchInput = document.getElementById("CowNumber");
             searchInput.disabled = true;
-            searchInput.placeholder = "";
-            disableSearchPlaceholder = true;
+            changeSearchPlaceHolder("Lameness Dashboard");
+            //
         }
 
         function returnToMain() {

@@ -10,6 +10,12 @@
                 <div class="panel-heading" role="tab">
                     <div class="row">
                         <div class="form-group col-xs-6">
+                            <div class="input-group input-field">
+                                <b>Select animal :</b>
+                                <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search animal" />
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
                             <b>How many days was animal lame for? :</b>
                             <asp:TextBox ID="LamenessDays" TextMode="Number" CssClass="form-control input-sm" onchange='LamenessDaysOnTextChange(this)' runat="server"></asp:TextBox>
                         </div>
@@ -157,6 +163,20 @@
                             <input type="file" name="fileToUpload" accept="image/*"  id="takePictureField" class="js-image-upload" runat="server" />
        <div class="js-image-container"></div>
     </div>--%>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                                <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">--%>
+                                <input type="date" name="DoneDateText" id="inputdate" class="">
+                                <div class="form-group">
+                                    <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
+                                    <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>--%>
+                                    <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <br />
@@ -584,6 +604,11 @@
 
             }
 
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Individual Lameness");
+            //
 
         }
 

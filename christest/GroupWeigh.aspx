@@ -7,6 +7,20 @@
 
     <div class="panel panel-default">
         <div class="row">
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                        <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">--%>
+                        <input type="date" name="DoneDateText" id="inputdate" class="">
+                        <div class="form-group">
+                            <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
+                            <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>--%>
+                            <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                        </div>
+                    </div>
+                </div>
+        </div>
             <div class="form-group col-xs-6">
                 <strong>
                     <asp:Label ID="groupWeighLbl" runat="server" Font-Bold="True">Select Group :</asp:Label>
@@ -150,29 +164,7 @@
             WriteFormValues("GroupWeigh.aspx?Type=AddGroupWeigh&HerdID=" + herdID + "&IsEID=" + isEID, document.forms[0], document.forms[0].HidTitle.value);
             var msg = pType + " has been recorded and will be transferred at next synchronisation";
                 
-            if("<%=Master.HandsFree%>" != "") 
-            {
-                if ("<%=Master.IsMulti%>" == "true")
-                {
-                    AsyncAndroid.ConvertTextToVoicePromptResponse("Do you want to continue Please Say Yes or No ?");
-                    var  voiceRespM = AsyncAndroid.GetVoiceCommand();
-                    if(voiceRespM!="no")
-                    {
-
-                    }
-                    else
-                    {
-                        AsyncAndroid.ConvertTextToVoice(msg);
-                        setTimeout(function(){ returnToMain();},1000);
-                    }
-                }
-                else
-                {
-                    AsyncAndroid.ConvertTextToVoice(msg);
-                    setTimeout(function(){ returnToMain();},2000);
-                }
-            }
-            else if (isEID != 1) 
+            if (isEID != 1) 
             {
                 App.alert("Results", msg);
             }
@@ -182,9 +174,9 @@
             }
             document.getElementById("form1").reset();
 
-            //var aniTable = document.getElementById("WeighTable");
-            //if (aniTable != null)
-            //    aniTable.parentNode.removeChild(aniTable);
+            var aniTable = document.getElementById("WeighTable");
+            if (aniTable != null)
+                aniTable.parentNode.removeChild(aniTable);
 
             return true;
         }// submit
@@ -262,11 +254,11 @@
                 }                    
             }
 
-            // disabling the search feature within the navigation menu
+            //
             var searchInput = document.getElementById("CowNumber");
             searchInput.disabled = true;
-            searchInput.placeholder = "";
-            disableSearchPlaceholder = true;
+            changeSearchPlaceHolder("Group Weigh");
+            //
         }
 
 
@@ -305,7 +297,7 @@
             }
             // Put the weight list value in the animals string
 
-            //document.forms[0].HidWeighList.value = weightList;
+            document.forms[0].HidWeighList.value = weightList;
             //var title;
 
             //if (document.getElementById("Eidinputdate")) {

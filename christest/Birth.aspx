@@ -137,6 +137,12 @@
                 <div class="panel-heading" role="tab">
                     <div class="row">
                         <div class="form-group col-xs-6">
+                            <div class="input-group input-field">
+                                <b>Select animal :</b>
+                                <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search animal" />
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
                             Select if no calf,stillborn or slaughtered
                                <n0:MobileDropDownList ID="CalfStillBornNotes" runat="server" class="form-control">
                                </n0:MobileDropDownList>
@@ -278,6 +284,12 @@
                 <div class="panel-heading" role="tab">
                     <div class="row">
                         <div class="form-group col-xs-6">
+                            <div class="input-group input-field">
+                                <b>Select animal :</b>
+                                <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search animal" />
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
                             <strong>
                                 <asp:Label ID="Label6789" runat="server" Font-Bold="True"><%=Master.Mother%> EID :</asp:Label>
                             </strong>
@@ -318,10 +330,21 @@
                         </div>
                     </div>
 
-                    <div align="center">
-
-                        <a href="#" id="ReadLambs" class="btn btn-primary waves-effect waves-light" onclick="scanChildTag();">Read <%=Master.Child%> Tags</a>
-                        <%--<a href="#" onclick="insertRow();" class="btn btn-primary waves-effect waves-light"><i class="material-icons">add</i></a>--%>
+                    <div align="center" id="lambingPhone">
+                        <div class="row">
+                            <div class="form-group col-xs-6">
+                                <a href="#" id="ReadLambs" class="btn btn-primary waves-effect waves-light" onclick="scanChildTag();">Read <%=Master.Child%> Tags</a>
+                                <%--<a href="#" onclick="insertRow();" class="btn btn-primary waves-effect waves-light"><i class="material-icons">add</i></a>--%>
+                            </div>
+                        </div>
+                    </div>
+                    <div align="center" id="lambingWeb">
+                        <div class="row">
+                            <div class="form-group col-xs-6">
+                                <input type="number" name="lambID" id="lambID" max="15" class="input-sm" style="width:200px;">
+                                <a href="#" id="AddLambs" class="btn btn-primary waves-effect waves-light" onclick="scanChildTag();">Add EID <%=Master.Child%> Tag</a>
+                            </div>
+                        </div>
                     </div>
                     <br />
 
@@ -375,6 +398,20 @@
 
                         </div>
                     </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                                <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">--%>
+                                <input type="date" name="DoneDateText" id="inputdate" class="">
+                                <div class="form-group">
+                                    <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
+                                    <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>--%>
+                                    <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div align="center">
                         <br></br>
                         <a href="#" id="AddLambing" class="btn btn-primary waves-effect waves-light" onclick="addLambing('<%=Master.herdID%> ');">Add Birth</a>
@@ -401,16 +438,39 @@
             document.forms[0].HidTitle.value = "Recorded Birth animals";
             WriteFormValues("Birth.aspx?Type=AddEIDBirth"  + "&HerdID=" + herdID + "&IsEID=" + isEID, document.forms[0], document.forms[0].HidTitle.value);
             var msg ="Birth has been recorded and will be transferred at next synchronisation";
-            if(isEID==1)  App.message(msg); 
-                else
+            if (isEID == 1) {
+                App.message(msg);
+            }
+            else {
                 App.alert("Result", msg);
+            }
             
             document.getElementById("form1").reset();
         }
 
-        function scanChildTag(){
-            scanChild=true;
+
+        function scanChildTag() {
+            if (App.androidBrowser() == false || App.iOSApp() == false) {
+                var tagId = document.getElementById("lambID").value;
+                if (tagId.length > 15)
+                {
+                    App.alert("Error", "EID is too long");
+                }
+                else if (tagId.length < 15) {
+                    App.alert("Error", "EID is too short");
+                }
+                else{
+                    if (tagId != null && tagId != "") {
+                        addLamb(tagId);
+                        document.getElementById("lambID").value = "";
+                    }
+                }
+            }// if
+            else
+                scanChild = true;
+
         }
+
 
         function selectAnimal(animal) {
 
@@ -453,7 +513,6 @@
             }
 
         }
-
 
 
         function readNfcTag(tagValue)
@@ -614,6 +673,16 @@
                 eventType = "Birth";
             }
 
+            if (App.androidBrowser() == true || App.iOSApp() == true){
+                document.getElementById("lambingPhone").style.display = "block";
+                document.getElementById("lambingWeb").style.display = "none";
+            }// if
+            else {
+                document.getElementById("lambingPhone").style.display = "none";
+                document.getElementById("lambingWeb").style.display = "block";
+            }// else
+            
+
             db = OpenDatabase();
             if (!db) {
                 alert("Cannot open database");
@@ -642,34 +711,28 @@
             // If animalID is set then get it
             var defaultAnimalID = sessionStorage.getItem('InternalAnimalID');
 
-            // Fill up the various lists
-            //FillDynamicList("AnimalList", "AnimalList", HerdID, 1, defaultAnimalID);
-            
-            //FillDynamicList("DoneObservedBy", "DoneObservedBy", HerdID,0);
-            
-           <%-- if (eventType == "Birth") {
+<%--        // Fill up the various lists
+            //FillDynamicList("AnimalList", "AnimalList", HerdID, 1, defaultAnimalID);          
+            //FillDynamicList("DoneObservedBy", "DoneObservedBy", HerdID,0);            
+            //if (eventType == "Birth") {
                 //FillDynamicList("<%=CalfEarTag.ClientID%>", "CalfEarTag", HerdID, 0);
                 //FillDynamicList("<%=Breed.ClientID%>", "Breed", HerdID, 0);
-                //FillDynamicList("<%=BullBirthEarTag.ClientID%>", "BullBirthEarTag", HerdID, 0, "N/A");
-                
+                //FillDynamicList("<%=BullBirthEarTag.ClientID%>", "BullBirthEarTag", HerdID, 0, "N/A");               
                 // Set selected index of bull birth ear tag to be 0
                 //FillDynamicList("<%=SireList1.ClientID%>", "SireList", HerdID, 0);             
-            }--%>
-
-
-            <%--if (isEID == 1) {
-                document.getElementById('selectedAnimalsTable').style.display = 'block';
+            //}
+            //if (isEID == 1) {
+                //document.getElementById('selectedAnimalsTable').style.display = 'block';
                 //document.getElementById('StartScanButton').style.display = 'none';
                 //hideSelect(document.getElementById('StartScanButton')); // 
-                if(<%=Master.IsInnova%> == "0") {
-                    if(document.getElementById('Lambtable')){
-                        document.getElementById('T4').style.display = 'none';
-                        document.getElementById('T5').style.display = 'none';
-                        document.getElementById('T6').style.display = 'none';
+                //if(<%=Master.IsInnova%> == "0") {
+                    //if(document.getElementById('Lambtable')){
+                    //    document.getElementById('T4').style.display = 'none';
+                    //    document.getElementById('T5').style.display = 'none';
+                    //    document.getElementById('T6').style.display = 'none';
                     }// if
-                }// if
-            }// if--%>
-
+                //}// if
+            //}// if--%>
             /////
             var tableID = "LambTable";
             var table1 = document.getElementById(tableID);
@@ -677,6 +740,12 @@
                 createTable();
             }
             /////
+
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Record Birth");
+            //
         }// initPage
 
 
@@ -754,7 +823,6 @@
         //    var tbody = table.getElementsByTagName("tbody")[0];
         //    var rowCount = tbody.rows.length;
         //    var row = tbody.insertRow(-1);
-
         //    var InternalIDHidCell = row.insertCell(0);
         //    var element9 = document.createElement("input");
         //    element9.type = "number";
@@ -762,7 +830,6 @@
         //    element9.style.width = '60px';
         //    element9.align = "center";
         //    InternalIDHidCell.appendChild(element9);
-
         //    var cell2 = row.insertCell(1);
         //    var checkbox = document.createElement('input');
         //    checkbox.type = "checkbox";
@@ -770,7 +837,6 @@
         //    checkbox.value = "value";
         //    checkbox.id = "id";    
         //    cell2.appendChild(checkbox);
-
         //    var cell5 = row.insertCell(6);
         //    var element8 = document.createElement("input");
         //    element8.id = "myCheckbox" + InternalID;
@@ -782,8 +848,6 @@
         //    //
         //    cell5.appendChild(element8);
         //    cell5.appendChild(label);
-
-
         //    var cell2 = row.insertCell(2);
         //    var element9 = document.createElement("input");
         //    element9.type = "number";
@@ -791,7 +855,6 @@
         //    element9.style.width = '60px';
         //    element9.align = "center";
         //    cell2.appendChild(element9);
-
         //    var cell2 = row.insertCell(3);
         //    var element9 = document.createElement("input");
         //    element9.type = "number";
@@ -799,7 +862,6 @@
         //    element9.style.width = '60px';
         //    element9.align = "center";
         //    cell2.appendChild(element9);
-
         //    var cell2 = row.insertCell(4);
         //    var element9 = document.createElement("input");
         //    element9.type = "number";
@@ -807,7 +869,6 @@
         //    element9.style.width = '60px';
         //    element9.align = "center";
         //    cell2.appendChild(element9);
-
         //    var cell2 = row.insertCell(5);
         //    var element9 = document.createElement("input");
         //    element9.type = "number";
@@ -815,7 +876,6 @@
         //    element9.style.width = '60px';
         //    element9.align = "center";
         //    cell2.appendChild(element9);
-
         //    var newCell = row.insertCell(6);
         //    newCell.style.padding = "5px";
         //    newCell.style.margin = "5px";
@@ -851,14 +911,17 @@
                 lambList = lambList + "," + row.cells[2].childNodes[0].value;
                
                 if(row.cells[3]) {
-                    lambList = lambList + "," + row.cells[3].childNodes[0].value;
+                    //lambList = lambList + "," + row.cells[3].childNodes[0].value;
+                    lambList = lambList + "," + row.cells[3].childNodes[0].childNodes[3].value;
                 }
                 if(row.cells[4]) {
-                    lambList = lambList + "," + row.cells[4].childNodes[0].value;
+                    //lambList = lambList + "," + row.cells[4].childNodes[0].value;
+                    lambList = lambList + "," + row.cells[4].childNodes[0].childNodes[3].value;
                 }
                
                 if(row.cells[5]) {
-                    lambList = lambList + "," + row.cells[5].childNodes[0].value;
+                    //lambList = lambList + "," + row.cells[5].childNodes[0].value;
+                    lambList = lambList + "," + row.cells[5].childNodes[0].childNodes[3].value;
                 }
                
                 if(i<rowCount) {

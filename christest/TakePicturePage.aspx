@@ -518,6 +518,12 @@
                     document.getElementById('ReadMotherTag').style.display = 'none';
                 } 
             }
+
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Take Picture");
+            //
         }
 
 

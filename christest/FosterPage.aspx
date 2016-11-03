@@ -11,18 +11,30 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="form-group col-xs-6">
-                            <b>Foster Dam NationalID :</b>
+                            <%--<b>Foster Dam NationalID :</b>--%>
 
-                            <asp:TextBox ID="FosterDamEID" runat="server" readonly="true" class="form-control" MaxLength="20"></asp:TextBox>
+                            <%--<asp:TextBox ID="FosterDamEID" runat="server" readonly="true" class="form-control" MaxLength="20"></asp:TextBox>--%>
+                            
+                           <%-- <div class="form-group col-xs-6">--%>
+                                <div class="input-group input-field">
+                                    <b>Foster Dam NationalID :</b>
+                                    <input type="text" class="input-sm autocomplete" name="FosterDamEID" id="FosterDamEID" placeholder="Search DAM" />
+                                </div>
+                            <%--</div>--%>
 
                             <div style="margin-top: 5px"></div>
                             <a href="#" id="ReadFosterLambs" class="btn btn-primary waves-effect waves-light" onclick="scanLambTag();">Read Lamb Tag</a><br>
                             <br>
                         </div>
                         <div class="form-group col-xs-6">
-                            <b>Lamb NationalID :</b>
+                            <%--<b>Lamb NationalID :</b>
 
-                            <asp:TextBox ID="FosterLambEID" readonly="true" runat="server" class="form-control" MaxLength="20"></asp:TextBox>
+                            <asp:TextBox ID="FosterLambEID" readonly="true" runat="server" class="form-control" MaxLength="20"></asp:TextBox>--%>
+
+                            <div class="input-group input-field">
+                                <b>Lamb NationalID :</b>
+                                <input type="text" class="input-sm autocomplete" name="FosterLambEID" id="FosterLambEID" placeholder="Search LAMB" />
+                            </div>
                         </div>
                     </div>
                     <div align="center">
@@ -49,12 +61,14 @@
             
             //if (isEID == 1) 
             //{   
-                    if(document.getElementById("<%=FosterDamEID.ClientID%>").value == "") 
+                    <%--if(document.getElementById("<%=FosterDamEID.ClientID%>").value == "") --%>
+                    if(document.getElementById("FosterDamEID").value == "") 
                     {
                         App.message("No Foster Ewe ID scanned");
                         return false;
                     }
-                    if(document.getElementById("<%=FosterLambEID.ClientID%>").value == "") 
+                    <%--if(document.getElementById("<%=FosterLambEID.ClientID%>").value == "") --%>
+                    if(document.getElementById("FosterLambEID").value == "")
                     {
                         App.message("No Foster Lamb ID scanned");
                         return false;
@@ -325,7 +339,8 @@
                             if(row.WithdrawalDate!=''){
                                 alertWithdrawal(row.WithdrawalDate);
                             }
-                                var tag = document.getElementById("<%=FosterDamEID.ClientID%>");
+                               <%-- var tag = document.getElementById("<%=FosterDamEID.ClientID%>");--%>
+                               var tag = document.getElementById("FosterDamEID");
                                 tag.value = row.ElectronicID;
                         }
                         else {
@@ -374,7 +389,8 @@
                             if(row.WithdrawalDate!=''){
                                 alertWithdrawal(row.WithdrawalDate);
                             }
-                                var tag = document.getElementById("<%=FosterDamEID.ClientID%>");
+                                <%--var tag = document.getElementById("<%=FosterDamEID.ClientID%>");--%>
+                                var tag = document.getElementById("FosterDamEID");
                                 tag.value = row.ElectronicID;
                         }
                         else {
@@ -415,17 +431,46 @@
                             if (row.WithdrawalDate != '') {
                                 alertWithdrawal(row.WithdrawalDate);
                             }
-                            if(lambTag)
+
+                           
+                            if(lastSelectedSearchID != "" || lastSelectedSearchID != null)
                             {
-                                var tag = document.getElementById("<%=FosterLambEID.ClientID%>");
+                                if(lastSelectedSearchID == "FosterLambEID"){
+                                    var tag = document.getElementById("FosterLambEID");
+                                    tag.value = row.NationalID;     
+                                }
+
+                                if(lastSelectedSearchID == "FosterDamEID"){
+                                    var tag = document.getElementById("FosterDamEID");
+                                    tag.value = row.NationalID; 
+                                }
+                            }
+                           
+
+                            //if ($("#FosterLambEID").is(":focus")){
+                            //    var tag = document.getElementById("FosterLambEID");
+                            //    tag.value = row.NationalID;     
+                            //    lambTag = false;
+                            //}
+
+                            //if($("#FosterDamEID").is(":focus")){
+                            //    var tag = document.getElementById("FosterDamEID");
+                            //    tag.value = row.NationalID;    
+                            //}
+
+                            <%--<%--if(lambTag)
+                            {
+                                <%--var tag = document.getElementById("<%=FosterLambEID.ClientID%>");
+                                var tag = document.getElementById("FosterLambEID");
                                 tag.value = row.NationalID;     
                                 lambTag = false;
                             }// if
                             else
                             {
-                                var tag = document.getElementById("<%=FosterDamEID.ClientID%>");
+                                <%-- var tag = document.getElementById("<%=FosterDamEID.ClientID%>");
+                                var tag = document.getElementById("FosterDamEID");
                                 tag.value = row.NationalID;
-                            }// else
+                            }// else--%>
                         }
                         else {
                             App.alert("Error", "No records found");
@@ -484,9 +529,11 @@
                             if (row.withdrawalDate != ''){
                                 alertWithdrawal(row.WithdrawalDate);
                             }
-                            var field = "<%=FosterDamEID.ClientID%>";
+                            <%--var field = "<%=FosterDamEID.ClientID%>";--%>
+                            var field = "FosterDamEID";
                             if (lambTag){
-                                field = "<%=FosterLambEID.ClientID%>";
+                                <%--field = "<%=FosterLambEID.ClientID%>";--%>
+                                field = "FosterLambEID";
                             }
                             var tagField = document.getElementById(field);
                             //tagField.value = tag;  
@@ -558,6 +605,12 @@
                     }
                 }
             }
+
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Record Foster");
+            //
         }
 
 

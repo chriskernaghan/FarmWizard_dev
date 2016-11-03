@@ -103,8 +103,12 @@
                 <a id="help_button" href="#" onclick="App.alert('Alert', 'Not implemented Yet');" type="button" class="waves-effect"><i class="material-icons">help</i>Help</a>
             </li>--%>           
             <li class="panel-footer">
-                <a id="connectBluetooth_button" href="#" onclick="App.connectBTDevice('<%=this.BTReaderDeviceName%>','<%=this.BTDeviceReader%>','<%=this.BTReaderDeviceType%>');" type="button" class=""><i class="material-icons">bluetooth</i>Connect Bluetooth Devices</a>
-                <a id="disconnectBluetooth_button" style="display:none;" href="#" onclick="App.disconnectBT();" type="button" class=""><i class="material-icons">bluetooth-off</i>Disconnect Bluetooth Devices</a>
+                <a id="connectBluetoothReader_button" href="#" onclick="App.connectBTDevice('<%=this.BTReaderDeviceName%>','<%=this.BTDeviceReader%>','<%=this.BTReaderDeviceType%>');" type="button" class=""><i class="material-icons">bluetooth</i>Connect Bluetooth Reader</a>
+                <a id="disconnectBluetoothReader_button" style="display:none;" href="#" onclick="App.disconnectBTType(<%=this.BTReaderDeviceType%>);" type="button" class=""><i class="material-icons">bluetooth-off</i>Disconnect Bluetooth Reader</a>
+            </li>
+            <li class="panel-footer">
+                <a id="connectBluetoothWeigher_button" href="#" onclick="App.connectBTDevice('<%=this.BTWeigherDeviceName%>','<%=this.BTDeviceWeigher%>','<%=this.BTWeigherDeviceType%>');" type="button" class=""><i class="material-icons">bluetooth</i>Connect Bluetooth Weigh Scale</a>
+                <a id="disconnectBluetoothWeigher_button" style="display:none;" href="#" onclick="App.disconnectBTType('<%=this.BTWeigherDeviceType%>);" type="button" class=""><i class="material-icons">bluetooth-off</i>Disconnect Bluetooth Weigh Scale</a>
             </li>
             
         </ul>
@@ -167,21 +171,22 @@
     </div>
 
     <div class="content" style="display: none;">
-        <asp:Panel ID="CommonPanel" Visible="true" runat="server">
+<%--        <asp:Panel ID="CommonPanel" Visible="false" runat="server">
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-xs-12">
-                        <label for="Date" id="EventDateLabel">Date :</label>
-                        <input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">
+                        <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                        <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">
+                        <input type="date" name="DoneDateText" id="inputdate" class="">
                         <div class="form-group">
                             <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
-                            <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>--%>
-                            <asp:TextBox name="Notes" ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" style="resize:none" Height="120" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                            <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>
+                            <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
                         </div>
                     </div>
                 </div>
             </div>
-        </asp:Panel>
+        </asp:Panel>--%>
 
     
         <%--<asp:Panel ID="AnimalListPanel" Visible="false" runat="server">
@@ -208,7 +213,12 @@
         
         </asp:ContentPlaceHolder>
     </div>
-         <div id="selectedAnimalsTable">
+        <div class="row">
+            <div class="form-group col-xs-6">
+
+                <div id="selectedAnimalsTable">
+                </div>
+            </div>
         </div>
         <p></p>
     </form>
@@ -240,6 +250,7 @@
         var bReaderConnected = false;
         var sConnectedReader = "";
         var sConnectedWeigher = "";
+        var lastSelectedSearchID = "";
         //
         var readTagFor = "";
         var disableSearchPlaceholder = false;
@@ -464,7 +475,10 @@
                                 //    document.getElementById("Status").style.color = "Black";
 
                                 //}
-                                changeSearchPlaceHolder("Search " + results.rows.length + " Animals");
+
+                                var searchInput = document.getElementById("CowNumber");
+                                if (searchInput.placeholder === "Search Animals")
+                                    changeSearchPlaceHolder("Search " + results.rows.length + " Animals");
 
                                 $(".progress").fadeOut("slow", null);
                                 //only fill if we get results.
@@ -1028,10 +1042,23 @@
 
             }// else
 
-            if (bWeigherConnected || bReaderConnected) {
-                document.getElementById("disconnectBluetooth_button").style.display = "block";
-                document.getElementById("connectBluetooth_button").style.display = "none";
+            //if (bWeigherConnected || bReaderConnected) {
+            //    document.getElementById("disconnectBluetoothReader_button").style.display = "block";
+            //    document.getElementById("connectBluetoothReader_button").style.display = "none";
+            //}
+
+            if(bWeigherConnected)
+            {
+                document.getElementById("disconnectBluetoothWeigher_button").style.display = "block";
+                document.getElementById("connectBluetoothWeigher_button").style.display = "none";
             }
+
+            if(bReaderConnected)
+            {
+                document.getElementById("disconnectBluetoothReader_button").style.display = "block";
+                document.getElementById("connectBluetoothReader_button").style.display = "none";
+            }
+
             //App.alert("Alert", pDeviceName + " Connected");
 
         }// deviceConnected
@@ -1051,10 +1078,20 @@
                 sConnectedWeigher = "";
             }
 
-            if (!bWeigherConnected && !bReaderConnected)
-            {
-                document.getElementById("disconnectBluetooth_button").style.display = "none";
-                document.getElementById("connectBluetooth_button").style.display = "block";
+            //if (!bWeigherConnected && !bReaderConnected)
+            //{
+            //    document.getElementById("disconnectBluetoothReader_button").style.display = "none";
+            //    document.getElementById("connectBluetoothReader_button").style.display = "block";
+            //}
+
+            if (!bWeigherConnected) {
+                document.getElementById("disconnectBluetoothWeigher_button").style.display = "none";
+                document.getElementById("connectBluetoothWeigher_button").style.display = "block";
+            }
+
+            if (!bReaderConnected) {
+                document.getElementById("disconnectBluetoothReader_button").style.display = "none";
+                document.getElementById("connectBluetoothReader_button").style.display = "block";
             }
 
             App.alert("Alert", pDeviceName + " Disconnected");
@@ -1136,7 +1173,8 @@
             }
 
             if (!App.androidApp() && !App.iOSApp()) {
-                document.getElementById("connectBluetooth_button").style.display = "none";
+                document.getElementById("connectBluetoothReader_button").style.display = "none";
+                document.getElementById("connectBluetoothWeigher_button").style.display = "none";               
             }
 
 
@@ -1154,9 +1192,20 @@
             bWeigherConnected = getUrlParameter('weigherConnected');
             bReaderConnected = getUrlParameter('readerConnected');
 
-            if (bWeigherConnected === true || bReaderConnected === true) {
-                document.getElementById("disconnectBluetooth_button").style.display = "block";
-                document.getElementById("connectBluetooth_button").style.display = "none";
+            //if (bWeigherConnected === true || bReaderConnected === true) {
+            //    document.getElementById("disconnectBluetoothReader_button").style.display = "block";
+            //    document.getElementById("connectBluetoothReader_button").style.display = "none";
+            //}
+
+            
+            if (bWeigherConnected == "True") {
+                document.getElementById("disconnectBluetoothWeigher_button").style.display = "block";
+                document.getElementById("connectBluetoothWeigher_button").style.display = "none";
+            }
+
+            if (bReaderConnected == "True") {
+                document.getElementById("disconnectBluetoothReader_button").style.display = "block";
+                document.getElementById("connectBluetoothReader_button").style.display = "none";
             }
 
         });
@@ -1207,12 +1256,22 @@
             });
         });
 
-        $("#CowNumber").focusin(function () {
+        //$("#CowNumber").focusin(function () {
+        //    //if not empty - search again now to show it.
+        //    if ($("#CowNumber").val != "") {
+        //        $('input.autocomplete').autocomplete("search");
+        //        //have to recreate after calling the manual search!
+        //        SetupSearch();
+        //    }
+        //})
+
+        $("input.autocomplete").focusin(function () {
             //if not empty - search again now to show it.
-            if ($("#CowNumber").val != "") {
-                $('input.autocomplete').autocomplete("search");
+            if ($("#input.autocomplete").val != "") {
+                //$('input.autocomplete').autocomplete("search");
                 //have to recreate after calling the manual search!
                 SetupSearch();
+                lastSelectedSearchID = this.id;
             }
         })
 
@@ -1221,6 +1280,17 @@
             $("#close_button").show("0", function () {
             });
         });
+
+
+        $('input.autocomplete').focusout(function () {
+            var buttonsClicked = $(".input-group").find(':hover').last();
+            if (buttonsClicked.length) {
+                buttonsClicked.click();
+            }
+
+            $(".autocomplete-content").empty();
+        })
+
 
 
     </script>

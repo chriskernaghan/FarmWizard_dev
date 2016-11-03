@@ -171,6 +171,7 @@
             return(false);
         }
 
+
         function addEweScan(){
             eweScan=true;
         }
@@ -365,6 +366,12 @@
             searchInput.disabled = true;
             searchInput.placeholder = "";
             disableSearchPlaceholder = true;
+
+            //
+            var searchInput = document.getElementById("CowNumber");
+            searchInput.disabled = true;
+            changeSearchPlaceHolder("Add");
+            //
         }
 
         function deleteAllFromList() {

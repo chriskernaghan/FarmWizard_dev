@@ -1,5 +1,4 @@
-﻿
-<%@ Page Title="" Language="C#" MasterPageFile="_App.Master" AutoEventWireup="true" CodeBehind="iHerd.aspx.cs" Inherits="HybridAppWeb.iHerd" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="_App.Master" AutoEventWireup="true" CodeBehind="iHerd.aspx.cs" Inherits="HybridAppWeb.iHerd" %>
 <%@ Register TagPrefix="n0" Namespace="UIControls" Assembly="SourceConsole" %>
 <%@ MasterType  VirtualPath="_App.Master"%>
 
@@ -31,8 +30,8 @@
             //    document.getElementById('NonEIDEntryPanel').style.display = 'none';
             //if (document.getElementById('EIDEntryPanel'))
             //    document.getElementById('EIDEntryPanel').style.display = 'none';
-            if (document.getElementById('CommonPanel'))
-                document.getElementById('CommonPanel').style.display = 'none';
+            //if (document.getElementById('CommonPanel'))
+            //    document.getElementById('CommonPanel').style.display = 'none';
 
             if (document.getElementById('TitleLabel'))
                 document.getElementById('TitleLabel').style.display = 'none';
@@ -1312,11 +1311,12 @@
 
             //
             document.getElementById("lblReproHist").style.display = "none";
-            if(pRow.BreedHistoryText)
+            if(pRow.BreedHistoryText!="")
             {
                 document.getElementById("ReproHistoryLabel").innerHTML = "Repro History";
                 document.getElementById("BreedHistoryText").innerHTML = pRow.BreedHistoryText;
-
+                
+                document.getElementById("lblReproHist").style.display = "block";
             }
             
 
@@ -2116,7 +2116,7 @@ function readOneTag()
                                 <div class="row" >
                                     <div id="">
                                         <ul class="tabs">
-                                            <li id="lblReproHist" class="tab"><a class="active" href="#test1"><span id="ReproHistoryLabel"></a></li>
+                                            <li id="lblReproHist" class="tab"><a class="active" href="#test1"><span id="ReproHistoryLabel"></span></a></li>
                                             <li id="lblTreatment" class="tab"><a href="#test2"><span id="TreatmentLabel"></span></a></li>
                                             <li id="lblMilkRecords" class="tab"><a href="#test3"><span id="MilkRecordsLabel"></span></a></li>
                                             <li id="lblWeightRecords" class="tab"><a href="#test4"><span id="WeightHistoryLabel"></span></a></li>

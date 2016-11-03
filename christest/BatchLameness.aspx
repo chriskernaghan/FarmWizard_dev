@@ -56,6 +56,20 @@
                             </n0:MOBILEDROPDOWNLIST>
                         </div>
                     </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                                <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">--%>
+                                <input type="date" name="DoneDateText" id="inputdate" class="">
+                                <div class="form-group">
+                                    <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
+                                    <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>--%>
+                                    <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div align="center">
                         <a href="#" class="btn btn-primary waves-effect waves-light" onclick="checkInput();">Save BatchLameness</a>
                     </div>
@@ -397,11 +411,11 @@
                 handsFreeBatchLameness("BatchLameness");
             }
 
-            // disabling the search feature within the navigation menu
+            //
             var searchInput = document.getElementById("CowNumber");
             searchInput.disabled = true;
-            searchInput.placeholder = "";
-            disableSearchPlaceholder = true;
+            changeSearchPlaceHolder("Batch Lameness");
+            //
         }
 
         function sheepTypeTextChange() {
