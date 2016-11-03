@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="form-group col-xs-6">
                     <div class="input-group input-field">
-                        <b>Select animal :</b>
+                        <b>Select <span class="balloon-this">animal</span> :</b>
                         <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search animal" />
                     </div>
                 </div>

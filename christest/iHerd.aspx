@@ -2514,6 +2514,30 @@ function readOneTag()
                                     </div>
                                 </asp:Panel>
 
+                                <div class="row navigation-tiles">
+
+                                  <div class="col s6">
+                                    <div class="tile-navigation">
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="col s6">
+                                    <div class="tile-navigation">
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="col s6">
+                                    <div class="tile-navigation">
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="col s6">
+                                    <div class="tile-navigation">
+                                    </div>
+                                  </div>
+
+                                </div>
+
                                 <asp:Panel ID="ReportPanel" Visible="false" runat="server">
 
                                     <%--<button type="button" class ="btn btn-info btn-md btn-block" data-toggle="collapse" data-parent="#accordion" data-target="#report">View Reports</button>--%>
