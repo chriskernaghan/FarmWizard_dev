@@ -1,0 +1,29 @@
+
+body { font-family: 'roboto', Arial, Helvetica, sans-serif }
+
+.newstape a { color: #F5F7FA; }
+
+#wrapper {
+  width: 350px;
+  margin: 0 auto;
+}
+
+.text-center { text-align: center; }
+
+.text-right { text-align: right; }
+
+.text-justify { text-align: justify; }
+
+.newstape {
+  background-color: #3BB0D6;
+  color: #fff;
+  height: 200px;
+  overflow: hidden;
+}
+
+.newstape-content {
+  position: relative;
+  padding: 15px;
+}
+
+.newstape-drag { cursor: ns-resize; }

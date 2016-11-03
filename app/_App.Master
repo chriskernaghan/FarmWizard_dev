@@ -1,0 +1,1300 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="_App.Master.cs" Inherits="HybridAppWeb._App" %>
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#337ab7">    
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="includes/style.css" type="text/css" rel="stylesheet" media="screen">   
+    <link href="includes/jquery-ui.css" rel="stylesheet" >
+    <link href="includes/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link href="includes/toastr.min.css" rel="stylesheet"/>
+    <link href="includes/materialize.css" rel="stylesheet">
+    <link href="includes/bootstrap.min.css" rel="stylesheet">
+
+    <script src="Script/jquery.min.js"></script>
+    <script src="Script/jquery-ui.min.js"></script>
+    <script src="Script/materialize.min.js"></script>
+    <script src="Script/toastr.min.js"></script>
+    <script src="Script/HybridApp.js" type="text/javascript"></script>
+    <script src="Script/selectbox.js" type="text/javascript"></script>
+    <script src="Script/MobileDataEntry.js" type="text/javascript"></script>
+    <script src="Script/html5OfflineDatabase.js" type="text/javascript"></script> 
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body onload="initPage();">
+    
+    <form id="form1" runat="server">
+
+        <input type="hidden" name="HidAnimalList" />
+        <input type="hidden" name="HidTitle" />
+        <input type="hidden" name="HidAnimalsToAdd" />
+        <input type="hidden" name="HidAnimalNos" />
+        <input type="hidden" name="LambList" />
+        <input type="hidden" value="False" name="IsSubmitted" />
+        <input type="hidden" name="HidWeighList" />
+        <input type="hidden" name="HidCalfNationalID" />
+        <input type="hidden" name="EIDWeighAnimalList" />
+        <input type="hidden" name="HidAnimalListNFC" />
+        <input type="hidden" name="SelectedAnimalID" />
+        <input type="hidden" name="hidCalfVisibleTag" />
+        <input type="hidden" name="PictureAnimalID" />
+        <input type="hidden" name="AuditDateLabel" />
+        <input type="hidden" name="NoteDateLabel" />
+        <input type="hidden" name="MoveHidLabel" />
+        <input type="hidden" name="SetEIDLabel" />
+        <input type="hidden" name="AuditLiveListLabel" />
+        <input type="hidden" name="ScanPassportLabel" />
+        <input type="hidden" name="SupplierNameLabel" />
+        <input type="hidden" name="SupplierEnterpriseOrHerdID" />
+        <input type="hidden" name="NFCID" />
+        <input type="hidden" name="ReassignDateLabel" />
+        <input type="hidden" name="DairyHerd" value="<%= this.InDairyHerd %>" />
+
+        
+
+    <div>
+        <ul class="side-nav" id="mobile-sidenav">
+            <div class="mobile-picture">
+                <div class="mobile-picture-overlay">
+                    <div class ="menu-username-container"><%= this.DoneBy %></div>
+                    <div class="select-herd-container">
+                        <asp:Panel ID="MultiHerdPanel" Visible="false" runat="server">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="input-field">
+                                        <asp:Label ID="MultiHerdLabel" runat="server">My Herds:</asp:Label><n0:MobileDropDownList ID="MultiHerd" class="" onchange="setHerdID(true);" runat="server" EnableViewState="False" DataTextField="FriendlyName" DataValueField="InternalHerdID"></n0:MobileDropDownList><n0:MobileDropDownList ID="MultiHerdCopy" runat="server" class="hide" EnableViewState="False" DataTextField="FriendlyName" DataValueField="InternalHerdID"></n0:MobileDropDownList>
+                                    </div>
+                                </div>
+                            </div>
+                        </asp:Panel>
+                    </div>
+
+                </div>
+            </div>
+            <li class="panel-footer">
+                <a id="update_button" href="#" onclick="App.update();" type="button" class="waves-effect"><i class="material-icons">cached</i>Update App</a>
+            </li>
+            <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li>
+                        <a id="help_button1" href="#" type="button" class="collapsible-header waves-effect"><i class="material-icons">help</i>Help</a>
+                        <%--<a class="collapsible-header">Dropdown<i class="material-icons">arrow_drop_down</i></a>--%>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="#" onclick="App.email('support@orchidfarmtech.co.uk');"><i class="material-icons">email</i>Email Support</a></li>
+                                <li><a href="#" onclick="App.call('00441536443300');"><i class="material-icons">phone</i>Call Support</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="panel-footer" style="border-bottom: 1px solid #000; margin-bottom: 10px;">
+                <a id="logOut_button" href="#" onclick="App.logOut();" type="button" class="waves-effect"><i class="material-icons">people</i>Log Out</a>
+            </li>
+            <%--<li class="panel-footer">
+                <a id="help_button" href="#" onclick="App.alert('Alert', 'Not implemented Yet');" type="button" class="waves-effect"><i class="material-icons">help</i>Help</a>
+            </li>--%>           
+            <li class="panel-footer">
+                <a id="connectBluetoothReader_button" href="#" onclick="App.connectBTDevice('<%=this.BTReaderDeviceName%>','<%=this.BTDeviceReader%>','<%=this.BTReaderDeviceType%>');" type="button" class=""><i class="material-icons">bluetooth</i>Connect Bluetooth Reader</a>
+                <a id="disconnectBluetoothReader_button" style="display:none;" href="#" onclick="App.disconnectBTType(<%=this.BTReaderDeviceType%>);" type="button" class=""><i class="material-icons">bluetooth-off</i>Disconnect Bluetooth Reader</a>
+            </li>
+            <li class="panel-footer">
+                <a id="connectBluetoothWeigher_button" href="#" onclick="App.connectBTDevice('<%=this.BTWeigherDeviceName%>','<%=this.BTDeviceWeigher%>','<%=this.BTWeigherDeviceType%>');" type="button" class=""><i class="material-icons">bluetooth</i>Connect Bluetooth Weigh Scale</a>
+                <a id="disconnectBluetoothWeigher_button" style="display:none;" href="#" onclick="App.disconnectBTType('<%=this.BTWeigherDeviceType%>);" type="button" class=""><i class="material-icons">bluetooth-off</i>Disconnect Bluetooth Weigh Scale</a>
+            </li>
+            
+        </ul>
+
+        <div id="animalsearch" runat="server" style="display:none">
+            <div class="input-group input-field">
+                <input type="text" placeholder="Animals" class=" input-sm" name="filterInput" id="filterInput"
+                    autocapitalize="off" autocorrect="off" autocomplete="off" />
+                <span class="input-group-btn">
+                    <a href="#" id="findbutton" class="btn btn-info btn-sm" onclick="searchFBFind();">Find</a>
+                </span>
+            </div>
+        </div>
+
+
+        <asp:Panel ID="NavigationMenu" Visible="true" runat="server">
+            <div class="breadheader">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h1>
+                                <%--<a href="iherd.aspx?IsEID=<%=this.IsEID%>"></a>--%>
+                                <asp:Label ID="Titletext" runat="server"></asp:Label>
+                            </h1>
+                            <asp:Panel ID="SearchPanel" runat="server">
+                                <nav>
+                                    <div class="nav-wrapper">
+                                        <div id="animal-search-input">
+                                            <div class="input-group input-field">
+                                                <input type="text" class="input-sm autocomplete" name="CowNumber" id="CowNumber" placeholder="Search Animals" />
+                                                <label for="search">
+                                                    <!--<i class="material-icons">search</i>-->
+                                                </label>
+                                                <%--<span class="input-group-btn">
+                                            <a href="#" id="search" class="btn btn-info btn-sm" onclick="manHist();">Find</a>
+                                        </span>--%>
+
+                                                <a id="burger_button" href="#" data-activates="mobile-sidenav" class="button-collapse"><i class="material-icons">menu</i></a>
+                                                <a id="home_button" href="iherd.aspx?IsEID=<%=this.IsEID%>" class="button-collapse-home"><i class="material-icons">home</i></a>
+                                                <a id="close_button" href="#" onclick="return ClearFields();"><i class="material-icons">close</i></a>
+                                                <a href="#" onclick="App.voiceRecognition();" class="button-collapse-mic"><i id="mic_button" class="material-icons mic">mic</i></a>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="progress" style="position: absolute">
+                                            <div class="indeterminate" style="width: 70%"></div>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </asp:Panel>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <asp:Label ID="TitleLabel" runat="server"></asp:Label>         
+        </asp:Panel>
+        
+    </div>
+
+    <div class="content" style="display: none;">
+<%--        <asp:Panel ID="CommonPanel" Visible="false" runat="server">
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label for="Date" id="EventDateLabel" class="active">Date :</label>
+                        <%--<input type="text" name="DoneDateText" onfocus="(this.type='date')" id="inputdate" class="">
+                        <input type="date" name="DoneDateText" id="inputdate" class="">
+                        <div class="form-group">
+                            <label for="Notes" id="Notes3Label" font-bold="True">Notes :</label>
+                            <%--<input name="Notes" type="text" rows="3" class="" id="Notes"></input>
+                            <asp:TextBox ID="Notes" class="form-control input-sm" runat="server" MaxLength="50" Style="resize: none" Height="50" Width="200%" TextMode="MultiLine"></asp:TextBox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </asp:Panel>--%>
+
+    
+        <%--<asp:Panel ID="AnimalListPanel" Visible="false" runat="server">
+            <div class="row">
+                <div class="form-group col-xs-6">
+
+                    <a href="#" id="A233" class="btn btn-primary waves-effect waves-light" onclick="delFromList();return false;" style="float: left">Del</a>
+                    <div style="overflow: hidden; padding-left: .5em;">
+                        <n0:MOBILEDROPDOWNLIST class=" " id="EIDAnimalList" runat="server" EnableViewState="False"></n0:MOBILEDROPDOWNLIST>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-6">
+                    <div style="margin-top: 5px"></div>
+                    <input id="Count" class=" input-sm" type="text" name="Count" />
+                </div>
+            </div>
+        </asp:Panel>--%>
+
+                    
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+        <div class="row">
+            <div class="form-group col-xs-6">
+
+                <div id="selectedAnimalsTable">
+                </div>
+            </div>
+        </div>
+        <p></p>
+    </form>
+    <script>
+        ///<reference path="Script/jquery-ui.min.js" />
+        ///<reference path="/Script/HybridApp.js" />
+
+        var db;
+        var readyToWrite;
+        var HerdID;
+        var stopReading;
+        var isCommitted;
+        var singleVR = true;
+        var bluetoothVR = true;
+        var nfcTag = false;
+        var nfcAnimal = false;
+        var nfc = "";
+        var setEid = false;
+        var lastWeighDate;
+        var lastWeight;
+        var nationalId;
+        var scoreHistory;
+        var weighHistoryText;
+        var manualSearch = false;
+        var scanResult = false;
+        var SingleScan = false;
+        var allAnimals;
+        var bWeigherConnected = false;
+        var bReaderConnected = false;
+        var sConnectedReader = "";
+        var sConnectedWeigher = "";
+        var lastSelectedSearchID = "";
+        //
+        var readTagFor = "";
+        var disableSearchPlaceholder = false;
+        var multiHerdDL = document.getElementById("<%=MultiHerd.ClientID%>");
+
+        function showHelp()
+        {
+
+        }// showHelp
+
+
+
+        function ClearFields() {
+            document.getElementById("CowNumber").value = "";
+
+            $('input.autocomplete').autocomplete("search", " ");
+
+            //have to recreate after calling the manual search!
+            SetupSearch();
+        }
+
+        function SetupSearch() {
+            $('input.autocomplete').autocomplete({
+                data: allAnimals,
+                focus: function (event) {
+                    $('input.autocomplete').val(event.innerText);
+                    return false;
+                },
+                maxElementsAmount: 8,
+                onSelect: function (event) {
+                    findRecord(event.innerText, "SearchID");;
+                    return false;
+                }
+            });
+
+        }
+
+
+        //function FillAnimalList() {
+        function FillAnimalList(pHerdID) {
+
+            if (pHerdID != null && pHerdID != 0) {
+                var sql = "SELECT NationalID, CurrentStatus, SexText, FreezeBrand FROM Cows where InternalHerdID = '" + pHerdID + "'";
+                db.transaction(function (transaction) {
+                    transaction.executeSql(sql, [],
+                    function (transaction, results) {
+                        // results.rows holds the rows returned by the query
+
+                        var item = {};
+                        for (var i = 0; i < results.rows.length; i++) {
+                            var row = results.rows.item(i);
+                            //name = image
+
+                            var imagetype = "cow";
+                            if ("<%=package == EnterpriseManager.ePackages.SheepManager%>" == "True")
+                                imagetype = "sheep";
+                            var image = "images/" + imagetype;
+                            var imageColour = "";
+                            switch (row.CurrentStatus) {
+                                case "DoNotBreed":
+                                    imageColour = "-black";
+                                    break;
+                                case "InVWP":
+                                    imageColour = "-orange";
+                                    break;
+                                case "OutVWP":
+                                case "PastServiceDeadline":
+                                case "PastAlertDeadline":
+                                    imageColour = "-red";
+                                    break;
+                                case "Served":
+                                    imageColour = "-white";
+                                    break;
+                                case "Heat":
+                                    imageColour = "-lightgreen";
+                                    break;
+                                case "Pregnant":
+                                    imageColour = "-lightblue";
+                                    break;
+                                case "PregnantMultiple":
+                                    imageColour = "-pink";
+                                    break;
+                                case "DriedOff":
+                                    imageColour = "-yellow";
+                                    break;
+                                case "Unknown":
+                                    imageColour = "-lightgrey";
+                                    break;
+                                default:
+
+                            }
+                            image = image + imageColour + ".png";
+                            var freezebrand = "";
+                            if (row.FreezeBrand != '' && row.FreezeBrand != undefined)
+                                freezebrand = "[" + row.FreezeBrand + "] ";
+                            item[freezebrand + row.NationalID] = image;
+                        }
+
+                        allAnimals = item;
+
+                        if (results.rows.length == 0) {
+                            App.alert("alert", "No Animals available");
+                            return;
+                        }
+                        //showSelect(listBox);
+
+                        SetupSearch();
+                    },
+                     function (transaction, error) {
+                         //App.alert("alert", "Could not access offline item database, perhaps you need to synchronise?" + error.message);
+                     });
+
+
+                });
+
+
+                //$('input.autocomplete').autocomplete('option', 'source', allAnimals);
+            }
+            return;
+
+        }
+
+
+
+        function findRecord(pValue, pLookUpField) {
+
+            if (db) {
+                db.transaction(function (transaction) {
+                    var herdID = sessionStorage.getItem('HerdID');
+                    var sql = "SELECT * FROM Cows where " + pLookUpField + " = '" + pValue + "' and InternalHerdID = " + herdID;
+                    if (pLookUpField == "SearchID") {
+
+                        // Remove the management tag in [ ] 
+                        if (pValue.indexOf(']') >= 0)
+                            pValue = pValue.substring(pValue.indexOf('] ') + 2);
+
+                        sql = "SELECT * FROM Cows where NationalID like '%" + pValue + "%' and InternalHerdID = " + herdID;
+                    }
+
+                    transaction.executeSql(sql, [],
+                       function (transaction, results) {
+                           // results.rows holds the rows returned by the query
+                           if (results.rows.length > 1) {
+                               //alertWithCheck(results.rows.length + " animals found please select one from list");
+                               //var select = document.getElementById('CowNumberList');
+                               //select.options.length = 0;
+                               //for (z = 0; z < results.rows.length; z++) {
+                               //    var row = results.rows.item(z);
+                               //    select.options[select.options.length] = new Option(row.NationalID, row.NationalID);
+                               //}
+                               ////select.style.display = 'block';
+                               ////select.classList.remove("hide");
+                               //showSelect(select);
+                           }
+                           else if (results.rows.length == 1) {
+                               selectAnimal(results.rows.item(0));
+                           }
+                           else {
+                               if (pLookUpField == "NationalID") {
+                                   alertWithCheck("No records found");
+                               }
+                               else {
+                                   findRecord(pValue, "NationalID");
+                               }
+                           }
+                       },
+                       function (transaction, error) {
+                           alertWithCheck("Could not read: " + error.message);
+                       });
+                });
+            }
+            else {
+                alertWithCheck('Cant open database');
+            }
+        }
+
+
+
+        function setHerdID(update) {
+            var herdID = sessionStorage.getItem('HerdID');
+            var isCogent = "<%=this.IsCogent%>";
+
+            if (update) {
+                if (multiHerdDL) {
+                    herdID = multiHerdDL.value;
+                    sessionStorage.removeItem('HerdName');
+                    sessionStorage.setItem('HerdName', multiHerdDL.options[multiHerdDL.selectedIndex].text);
+
+                    sessionStorage.removeItem('HerdID');
+                    sessionStorage.setItem('HerdID', herdID);
+                }
+            }
+            else {
+                if (multiHerdDL) {
+                    var HerdName = sessionStorage.getItem('HerdName');
+                    for (var i = 0, j = multiHerdDL.options.length; i < j; ++i) {
+                        if (multiHerdDL.options[i].text === HerdName) {
+                            multiHerdDL.selectedIndex = i;
+                            $('#<%=MultiHerd.ClientID%>').material_select();
+                            herdID = multiHerdDL.value;
+                            break;
+                        }
+                    }
+                }
+                //else { alert("warning");}
+            }
+
+            if (herdID == 0 || herdID == "")
+                alert("No Herd ID");
+
+            //var sql1 = "SELECT * FROM Cows WHERE InternalHerdID = " + herdID;
+            if (disableSearchPlaceholder == false) {
+                db.transaction(function (transaction) {
+                    var searchHerdID = sessionStorage.getItem('HerdID');
+
+                    transaction.executeSql("SELECT * FROM Cows WHERE InternalHerdID = " + searchHerdID, [],
+                            function (transaction, results) {
+
+                                // results.rows holds the rows returned by the query
+                                //if (document.getElementById("Status")) {
+                                //    document.getElementById("Status").firstChild.data = results.rows.length + " animals loaded";
+                                //    document.getElementById("Status").style.color = "Black";
+
+                                //}
+
+                                var searchInput = document.getElementById("CowNumber");
+                                if (searchInput.placeholder === "Search Animals")
+                                    changeSearchPlaceHolder("Search " + results.rows.length + " Animals");
+
+                                $(".progress").fadeOut("slow", null);
+                                //only fill if we get results.
+                                FillAnimalList(herdID);
+                            },
+                            function (transaction, error) {
+                                App.confirm("Synchronise", "Offline database may not yet be initialised, click OK to Synchronise", "syncConfirm", "SetHerdID")
+
+                            });
+                });
+                //
+            }// if
+        }
+        function syncConfirm(id, result) {
+            if (id == "SetHerdID") {
+                if (result == true)
+                    sync(syncComplete);
+            }
+        }
+
+        function syncComplete()
+        {
+            setHerdID();
+        }
+
+        function changeSearchPlaceHolder(placeholderText)
+        {
+            $('#CowNumber').attr('placeholder', placeholderText);
+            if (document.getElementById("Status"))
+            document.getElementById("Status").style.display = 'none';
+        }
+
+        function alertWithdrawal(withdrawalDate, eventType) {
+            var event = eventType || "";
+            withdrawalDate = "";
+            if (withdrawalDate == "") {
+                return;
+            }
+            else if (eventType == 'Scan') {
+                return;
+            }
+            else if (eventType == 'Birth') {
+                return;
+            }
+            var parts = withdrawalDate.substring(0, 10).split('/');;
+            var withDate = new Date(parts[2], parts[1] - 1, parts[0]);
+            var today = new Date();
+            if (today < withDate) {
+                if ("<%=this.IsEID%>" == 1) {
+                      App.message("Meat should be withheld until " + withdrawalDate);
+                  }
+                  else {
+                      App.alert("AlertWithdrawal","Meat should be withheld until " + withdrawalDate);
+                  }
+              }
+        }
+        function returnToMain() {
+            window.location = "iHerd.aspx?IsEID=<%=this.IsEID%>";
+        }
+        function convertPTSTag(pTag) {
+            var startOfFrame = pTag.indexOf("=");
+            startOfFrame += 1;
+            var endOfFrame = startOfFrame + 16;
+            var reversedHexFormat = pTag.substring(startOfFrame, endOfFrame);
+
+            var hexFormat = "";
+            // Need to reverse the hex we get from the BT reader
+            for (var z = reversedHexFormat.length; z > 0; z -= 2) {
+                hexFormat += reversedHexFormat.substring(z - 2, z);
+            }
+            return (hexFormat);
+        }
+
+        function confirmResult(id, value)
+        {
+
+        }
+
+        function delFromList() {
+            var ans = confirm("Are you sure you want to remove this animal?");
+            //var ans = App.confirm("Record", "Are you sure you want to remove this animal?", confirmRecord, pType);
+
+            if (ans) {
+                var i;
+                //var selectbox = document.getElementById("EIDAnimalList");
+                //var value;
+                //var deletedIndex;
+                //var nothingSelected = true;
+                //for (i = selectbox.options.length - 1; i >= 0; i--) {
+                //    if (selectbox.options[i].selected) {
+                //        nothingSelected = false;
+                //        deletedIndex = (selectbox.options.length - i); // Its a reverse index
+                //        value = selectbox.options[i].value;
+                //        deleteFromList(selectbox.options[i].value, null, false);
+                //        // selectbox.remove(i);
+                //        document.getElementById("Count").value = selectbox.options.length;
+                //        break;
+                //    }
+                //}
+
+                if (nothingSelected) {
+                    App.alert("Please Try again","No entry Selected, please try again");
+                    return false;
+                }
+                var weighTable = document.getElementById('EIDWeighTable');
+
+                if (weighTable) {
+                    if (deletedIndex > 0) {
+                        weighTable.deleteRow(weighTable.rows.length - deletedIndex);
+                    }
+                }
+
+            }
+            return false;
+        }
+        function addToList(pEID, pNFC) {
+            var tableID = "AnimalListTable";
+            var table = document.getElementById(tableID);
+
+            if (table != null) {
+                var tbody = table.getElementsByTagName("tbody")[0];
+
+                //count the rows
+                var rowCount = tbody.rows.length;
+                //count the columns
+                var colCount = table.rows[0].cells.length;
+
+                //if (colCount == 1)
+                //{
+                //    //nfc not created yet
+                //    if (pEID == pNFC)
+                //    {
+                //        //they match so no need to show the NFC column
+                //        pNFC = null;
+                //    }
+                //}
+
+                if (pNFC != null) {
+                    //we have been passed an NFC ID - need to ensure there are two columns in the first row of the table
+                    if (colCount == 1) {
+                        //add a new column for NFC
+                        var tr = table.tHead.children[0];
+                        var cell = document.createElement('th');
+                        cell.innerHTML = "NFC";
+                        cell.style.padding = "5px";
+                        cell.style.margin = "5px";
+                        tr.appendChild(cell);
+
+                        //remove all delete buttons and recreate in the next row.
+                        for (var k = 0; k < rowCount; k++) {
+                            var row = tbody.rows[k];
+                            var cells = row.getElementsByTagName("td");
+                            if (cells[1] != null) {
+                                //clear the contents of the cell.
+                                while (cells[1].firstChild) {
+                                    cells[1].removeChild(cells[1].firstChild);
+                                }
+                                //re-add all the delete options
+                                var newCell = row.insertCell(2);
+                                newCell.style.padding = "5px";
+                                newCell.style.margin = "5px";
+                                var deletebtn = document.createElement("button");
+                                deletebtn.className = "btn btn-danger btn-xs";
+                                deletebtn.appendChild(document.createTextNode("delete"));
+                                deletebtn.onclick = function () {
+                                    deleteFromList(cells[0].innerText, cells[1].innerText, true);
+                                    return false;
+                                };
+                                newCell.appendChild(deletebtn);
+                            }
+                        }
+
+                        //update colCount
+                        colCount = table.rows[0].cells.length;
+                    }
+                    else {
+                        //shouldn't need to do anything here - we should have both EID and NFC columns.
+                    }
+                }
+
+                //does the EID exist already, if so - and we have NFC passed in - then just set the NFC
+                if (pEID != null) {
+                    for (var k = 0; k < rowCount; k++) {
+                        var row = tbody.rows[k];
+                        var cells = row.getElementsByTagName("td");
+
+                        if ((cells[0].innerText == pEID) && (cells[1].innerText == pNFC)) {
+                            if (pNFC != null) {
+                                var myCell;
+                                if (cells[1] != null) {
+                                    //clear the contents of the cell.
+                                    while (cells[1].firstChild) {
+                                        cells[1].removeChild(cells[1].firstChild);
+                                    }
+                                    myCell = cells[1];
+                                }
+                                else
+                                    myCell = row.insertCell(1);
+
+                                myCell.appendChild(document.createTextNode(pNFC));
+
+                                //updateDeleteBtn
+                                cells[2].firstChild.onclick = function () {
+                                    deleteFromList(cells[0].innerText, cells[1].innerText, true);
+                                };
+
+                                if (k < rowCount)
+                                {
+                                    //move to the next row
+                                    k = k+1;
+                                    //look for duplicates
+                                    for(var j=k; j<rowCount; j++) {
+                                        var row = tbody.rows[j];
+                                        var cells = row.getElementsByTagName("td");
+                                        if (cells[0] != null)
+                                        {
+                                            if(cells[0].innerText == pEID)
+                                            {
+                                                tbody.deleteRow(j);
+                                            }
+                                        }
+                                    }
+
+                                    for(var m=0; m<rowCount; m++) {
+                                        var row = tbody.rows[m];
+                                        var cells = row.getElementsByTagName("td");
+                                        if (cells[0] != null && cells[1] != null)
+                                        {
+                                            //if there is a row with the same NFC value set, that does not equal the EID we are setting, delete it.
+                                            if(cells[1].innerText != pNFC && cells[0].innerText != pEID)
+                                            {
+                                                tbody.deleteRow(m);
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                            return;
+                        }
+                    }
+                }
+
+                //does the NFC exist already, if so - and we have EID passed in - then just set the EID
+                if (pNFC != null) {
+                    for (var k = 0; k < rowCount; k++) {
+                        var row = tbody.rows[k];
+                        var cells = row.getElementsByTagName("td");
+                        if (cells[1] != null) {
+                            if (cells[1].innerText == pNFC) {
+                                if (pEID != null) {
+                                    //clear the contents of the cell.
+                                    while (cells[0].firstChild) {
+                                        cells[0].removeChild(cells[0].firstChild);
+                                    }
+                                    cells[0].appendChild(document.createTextNode(pEID));
+
+                                    //updateDeleteBtn
+                                    cells[2].firstChild.onclick = function () {
+                                        deleteFromList(cells[0].innerText, cells[1].innerText, true);
+                                    };
+
+                                    //look for duplicates
+                                    if (k < rowCount) {
+                                        //move to the next row
+                                        k = k + 1;
+                                        //look for duplicates                                        
+                                        for (var j = k; j < rowCount; j++) {
+                                            var row = tbody.rows[j];
+                                            var cells = row.getElementsByTagName("td");
+                                            if (cells[1] != null) {
+                                                if (cells[1].innerText == pNFC) {
+                                                    tbody.deleteRow(j);
+                                                }
+                                            }
+                                        }
+
+                                        for (var m = 0; m < rowCount; m++) {
+                                            var row = tbody.rows[m];
+                                            var cells = row.getElementsByTagName("td");
+                                            if (cells[0] != null && cells[1] != null) {
+                                                //if there is a row with the same EID value set, that does not equal the NFC we are setting, delete it.
+                                                if (cells[0].innerText == pEID && cells[1].innerText != pNFC) {
+                                                    tbody.deleteRow(m);
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                }
+                                else {
+                                    if (cells[0].childNodes.length == 0) {
+                                        //add a Set EID button
+                                        var setEIDbtn = document.createElement("button");
+                                        setEIDbtn.className = "btn btn-success btn-xs";
+                                        setEIDbtn.appendChild(document.createTextNode("Set EID"));
+                                        setEIDbtn.onclick = function () {
+                                            //read tag
+                                            setTimeout(function () {
+                                                if (bReaderConnected) {
+                                                    App.message("Ready to scan tag...");
+                                                    //Android.ReadTagFor(pNFC);
+                                                    readTagFor = pNFC;
+
+                                                }
+                                            }, 300);
+                                            return false;
+                                        };
+                                        cells[0].appendChild(setEIDbtn);
+                                    }
+                                }
+                                //otherwise ignore, as they have scanned the same animal again.
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                //if we get to here then we must be adding a new row:   (-1 indicates the next avilable position)
+                var row = tbody.insertRow(-1);
+
+                //create the cell for the EID (we always want to show an EID tag)
+                var eidCell = row.insertCell(0);
+                eidCell.style.padding = "5px";
+                eidCell.style.margin = "5px";
+
+                var nfcCell;
+                //if we have the column for NFC set, add a cell for it. (NFC is optional)
+                if (colCount == 2) {
+                    nfcCell = row.insertCell(1);
+                    nfcCell.style.padding = "5px";
+                    nfcCell.style.margin = "5px";
+                }
+
+                //if we have been passed an EID...
+                if (pEID != null) {
+                    //add the EID text node to the cell
+                    eidCell.innerText = pEID;
+                }
+                else {
+                    //create a set EID button
+                    var setEIDbtn = document.createElement("button");
+                    setEIDbtn.className = "btn btn-success btn-xs";
+                    setEIDbtn.appendChild(document.createTextNode("Set EID"));
+                    setEIDbtn.onclick = function () {
+                        setEid = true;
+                        //read tag
+                        setTimeout(function () {
+                            if (bReaderConnected) {
+                                App.message("Ready to scan tag...");
+                                //Android.ReadTagFor(pNFC);
+                                readTagFor = pNFC;
+
+                            }
+                        }, 300);
+                        return false;
+                    };
+                    eidCell.appendChild(setEIDbtn);
+
+                }
+                if (pNFC != null) {
+                    //add the NFC text node to the cell
+                    nfcCell.innerText = pNFC;
+                }
+
+                //add a delete option to the row
+                var deleteRowCell = row.insertCell(-1);
+                deleteRowCell.style.padding = "5px";
+                deleteRowCell.style.margin = "5px";
+                var deletebtn = document.createElement("button");
+                deletebtn.className = "btn btn-danger btn-xs";
+
+                deletebtn.appendChild(document.createTextNode("delete"));
+                deletebtn.onclick = function () {
+                    var nfcID = null;
+                    if (nfcCell != null)
+                        nfcID = nfcCell.innerText;
+                    deleteFromList(eidCell.innerText, nfcID, true);
+                    return false;
+                };
+
+                deleteRowCell.appendChild(deletebtn);
+
+            }
+            else {
+                //create the table now, and call back to self (risk of infinite loop)
+                var newTable = document.createElement('table');
+                newTable.id = tableID;
+                newTable.style.padding = "4px";
+                newTable.style.margin = "4px";
+
+                //create header for EID
+                var header = newTable.createTHead();
+                var row = header.insertRow(0);
+                var cell = document.createElement('th');
+                cell.innerHTML = "Animal";
+                cell.style.padding = "5px";
+                cell.style.margin = "5px";
+                row.appendChild(cell);
+
+
+                var newtbody = document.createElement('tbody');
+                newTable.appendChild(newtbody);
+
+                //add the table to the DOM
+                document.getElementById('selectedAnimalsTable').appendChild(newTable);
+
+                //call back to self now that the table exists
+                //safe check here that we can get the table before we call back to self.
+                var table = document.getElementById(tableID);
+                if (table != null)
+                    addToList(pEID, pNFC);
+                else
+                    App.alert("Problem","Problem creating the Animal Table");
+            }
+            nfc = "";
+        }
+                          
+    <%--function checkForDuplicate(scannedTag) {
+
+        var eventType = "<%=this.EventType%>";
+        if ((eventType == "New") && (document.getElementById("SameDetailCheckBox").checked == false)) {
+            // For new animals being added one at a time we need a different check
+            return(checkIfOnList(scannedTag));
+        }
+                         
+        var animals = document.getElementById("EIDAnimalList").options;
+        var count = animals.length;
+
+        for (var k = 0; k < count; k++) {
+            if (animals[k].text.substring(0, 15) == scannedTag) {
+                Android.shortVibrate();
+                setTimeout(function () { Android.shortVibrate();  }, 500);
+                return 1;
+            }
+        }
+        Android.shortVibrate();
+        return 0;
+
+    }--%>
+
+        function deleteFromList(pEID, pNFC, showconfirm) {
+            var check = false;
+            if (showconfirm)
+                check = confirm("Are you sure you want to remove this animal?");
+                //check =  App.confirm("Record", "Are you sure you want to remove this animal?", confirmRecord, pType);
+            else
+                check = true;
+
+            if (check == true) {
+                var tableID = "AnimalListTable";
+                var table = document.getElementById(tableID);
+
+                var tbody = table.getElementsByTagName("tbody")[0];
+
+                for (var k = 0; k < tbody.rows.length; k++) {
+                    var row = tbody.rows[k];
+                    var cells = row.getElementsByTagName("td");
+                    if (pEID != null && pNFC != null) {
+                        if (cells[0].innerText == pEID && cells[1].innerText == pNFC) {
+                            tbody.removeChild(row);
+                        }
+                    }
+                    else if (pEID != null && pNFC == null) {
+                        if (cells[0].innerText == pEID) {
+                            tbody.removeChild(row);
+                        }
+                    }
+                    else if (pEID == null && pNFC != null) {
+                        if (cells[1].innerText == pNFC) {
+                            tbody.removeChild(row);
+                        }
+                    }
+                }
+
+                //also delete from the EIDAnimalList
+
+                //var selectbox = document.getElementById("EIDAnimalList");
+
+                //for (i = selectbox.options.length - 1; i >= 0; i--) {
+                //    if (selectbox.options[i].value == pEID) {
+                //        selectbox.remove(i);
+                //        document.getElementById("Count").value = selectbox.options.length;
+                //        break;
+                //    }
+                //}
+
+
+                //now check there is anything left in the table & delete it if not. 
+                if (tbody.rows.length == 0)
+                    document.getElementById('selectedAnimalsTable').removeChild(table);
+
+            }
+
+            return false;
+
+        }
+
+        //returns an array of objects with EID and NFCID values.
+        function getAllFromList() {
+            var arr = [];
+
+            var tableID = "AnimalListTable";
+            var table = document.getElementById(tableID);
+
+            var tbody = table.getElementsByTagName("tbody")[0];
+
+            var colCount = table.rows[0].cells.length;
+
+            for (var k = 0; k < tbody.rows.length; k++) {
+                var vEID;
+                var vNFC;
+
+                var row = tbody.rows[k];
+                var cells = row.getElementsByTagName("td");
+                if (cells[0] != null) {
+                    if (cells[0].firstChild) {
+                        if (cells[0].firstChild.nodeName == "#text")
+                            vEID = cells[0].innerText;
+                        else
+                            vEID = "";
+                    }
+                }
+                //2 headers means NFC is shown.
+                if (colCount == 2) {
+                    if (cells[1] != null) {
+                        vNFC = cells[1].innerText;
+                    }
+                    else
+                        vNFC = "";
+                }
+                //else
+                //{
+                //    //if no NFC set, return EID as NFC
+                //    vNFC = cells[0].innerText;
+                //}
+
+                arr.push({ EID: vEID, NFCID: vNFC })
+            }
+
+            return arr;
+        }
+
+
+        function deviceConnected(pDeviceName, pType) {
+
+            //change the "Connect Bluetooth Devices" button to say "Disconnect Bluetooth Devices".
+            //make it call App.disconnectBT()
+
+            //pType = reader, weigher or none (lowercase)
+            if (pType == "reader") {
+                bReaderConnected = true;
+            }// if
+            else if (pType == "weigher") {
+                bWeigherConnected = true;
+            }// else if
+            else if (pType == "none") {
+
+            }// else if
+            else {
+
+            }// else
+
+            //if (bWeigherConnected || bReaderConnected) {
+            //    document.getElementById("disconnectBluetoothReader_button").style.display = "block";
+            //    document.getElementById("connectBluetoothReader_button").style.display = "none";
+            //}
+
+            if(bWeigherConnected)
+            {
+                document.getElementById("disconnectBluetoothWeigher_button").style.display = "block";
+                document.getElementById("connectBluetoothWeigher_button").style.display = "none";
+            }
+
+            if(bReaderConnected)
+            {
+                document.getElementById("disconnectBluetoothReader_button").style.display = "block";
+                document.getElementById("connectBluetoothReader_button").style.display = "none";
+            }
+
+            //App.alert("Alert", pDeviceName + " Connected");
+
+        }// deviceConnected
+
+
+        function deviceDisconnected(pDeviceName, pType) {
+
+            //change the "Disconnect Bluetooth Devices" button to say "Connect Bluetooth Devices".
+            //make it call App.connectBTDevice()
+
+            if (pType == "reader") {
+                bReaderConnected = false;
+                sConnectedReader = "";
+            }
+            else if (pType == "weigher") {
+                bWeigherConnected = false;
+                sConnectedWeigher = "";
+            }
+
+            //if (!bWeigherConnected && !bReaderConnected)
+            //{
+            //    document.getElementById("disconnectBluetoothReader_button").style.display = "none";
+            //    document.getElementById("connectBluetoothReader_button").style.display = "block";
+            //}
+
+            if (!bWeigherConnected) {
+                document.getElementById("disconnectBluetoothWeigher_button").style.display = "none";
+                document.getElementById("connectBluetoothWeigher_button").style.display = "block";
+            }
+
+            if (!bReaderConnected) {
+                document.getElementById("disconnectBluetoothReader_button").style.display = "none";
+                document.getElementById("connectBluetoothReader_button").style.display = "block";
+            }
+
+            App.alert("Alert", pDeviceName + " Disconnected");
+        }// deviceDisconnected
+
+
+
+
+        function showSelect(element)
+        {
+            element.classList.remove("hide");
+            $('select').material_select();
+        }// showSelect
+
+        function hideSelect(element) {
+            element.className += " hide";
+            $('select').material_select();
+        }// hideSelect
+
+    </script>
+    <style>
+
+        #StartScanButton {
+            padding: 6px 50px;
+        }
+
+        #ReadMotherTag {
+            padding: 6px 70px;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0 5px;
+        }
+
+        thead th {
+            background-color: #006DCC;
+            color: white;
+        }
+
+        tbody td {
+            background-color: #EEEEEE;
+        }
+
+        tr td:first-child,
+        tr th:first-child {
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+        }
+
+        tr td:last-child,
+        tr th:last-child {
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+    </style>
+    <script>
+        ///<reference path="/Script/HybridApp.js" />
+    
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        $(document).ready(function () {
+
+            if (!db) {
+                db = OpenDatabase();
+            }
+
+            if (!App.androidApp() && !App.iOSApp()) {
+                document.getElementById("connectBluetoothReader_button").style.display = "none";
+                document.getElementById("connectBluetoothWeigher_button").style.display = "none";               
+            }
+
+
+            jQuery(".button-collapse").sideNav();
+            
+            $(".progress").fadeOut(0, function () {
+                $(".content").fadeIn(0);
+            });
+
+            setHerdID();
+
+            jQuery('select').material_select();
+
+
+            bWeigherConnected = getUrlParameter('weigherConnected');
+            bReaderConnected = getUrlParameter('readerConnected');
+
+            //if (bWeigherConnected === true || bReaderConnected === true) {
+            //    document.getElementById("disconnectBluetoothReader_button").style.display = "block";
+            //    document.getElementById("connectBluetoothReader_button").style.display = "none";
+            //}
+
+            
+            if (bWeigherConnected == "True") {
+                document.getElementById("disconnectBluetoothWeigher_button").style.display = "block";
+                document.getElementById("connectBluetoothWeigher_button").style.display = "none";
+            }
+
+            if (bReaderConnected == "True") {
+                document.getElementById("disconnectBluetoothReader_button").style.display = "block";
+                document.getElementById("connectBluetoothReader_button").style.display = "none";
+            }
+
+        });
+
+
+    </script>
+    <script>
+
+        $("#animalsearch, #close_button").hide();
+
+        $(".search-toggle").click(function () {
+            $("#animalsearch").toggle("slow", function () {
+            });
+        });
+
+        $("#animalsearch").appendTo(".breadheader .col-xs-12");
+
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+
+        $("#CowNumber").focusout(function () {
+
+            //catch any click events in our autocomplete first!
+            var outerDir = $(".autocomplete-content").find(':hover').last();
+            if (outerDir.length) {
+                outerDir.click();
+                $("#close_button").hide("0", function () {
+                });
+                return false;
+            }
+
+            var buttonsClicked = $(".input-group").find(':hover').last();
+            if (buttonsClicked.length){
+                buttonsClicked.click();
+            }
+
+            $("#close_button").hide("0", function () {
+            });
+            $(".autocomplete-content").empty();
+        })
+
+        $("#close_button").click(function () {
+            document.getElementById("CowNumber").value = "";
+            $("#close_button").hide("0", function () {
+            });
+        });
+
+        //$("#CowNumber").focusin(function () {
+        //    //if not empty - search again now to show it.
+        //    if ($("#CowNumber").val != "") {
+        //        $('input.autocomplete').autocomplete("search");
+        //        //have to recreate after calling the manual search!
+        //        SetupSearch();
+        //    }
+        //})
+
+        $("input.autocomplete").focusin(function () {
+            //if not empty - search again now to show it.
+            if ($("#input.autocomplete").val != "") {
+                //$('input.autocomplete').autocomplete("search");
+                //have to recreate after calling the manual search!
+                SetupSearch();
+                lastSelectedSearchID = this.id;
+            }
+        })
+
+        
+        $('#animal-search-input input[type="text"]').click(function () {
+            $("#close_button").show("0", function () {
+            });
+        });
+
+
+        $('input.autocomplete').focusout(function () {
+            var buttonsClicked = $(".input-group").find(':hover').last();
+            if (buttonsClicked.length) {
+                buttonsClicked.click();
+            }
+
+            $(".autocomplete-content").empty();
+        })
+
+
+
+    </script>
+
+</body>
+    
+</html>

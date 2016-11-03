@@ -1,0 +1,186 @@
+body {
+    	background:#e4eee0;
+ 	color:#383838;
+	font-size:12px;
+	font-family:"Helvetica", Arial, sans-serif;
+}
+
+h2 {
+	font-size:18px;
+	color:#4c8a2f;
+}
+
+table.details {
+	border-width: 1px;
+	border-spacing: 1px;
+	border-style: groove;
+	font-size:15px;
+	width:750px;
+     	border-color: black;
+	
+}
+table.details td {
+	border-width: 1px;
+	padding: 1px;
+	border-style: groove;
+	border-color: gray;
+	background-color: #e4eee0;
+	-moz-border-radius: ;
+}
+	
+	
+
+table.sample {
+	border-width: 1px;
+	border-spacing: 1px;
+	border-style: groove;
+	font-size:15px;
+	border-color: black;
+	width:750px;
+	border-collapse: separate;
+	background-color: white;
+}
+table.sample th {
+	border-width: 1px;
+	padding: 2x;
+	border-style: groove;
+	border-color: gray;
+	background-color: #e4eee0;
+	-moz-border-radius: ;
+}
+table.sample td {
+	border-width: 1px;
+	padding: 1px;
+	border-style: groove;
+	border-color: gray;
+	background-color: #e4eee0;
+	-moz-border-radius: ;
+}
+
+.selectHolder
+{
+	height:40px; 
+	padding:4px;
+	font-size: 17px;
+
+}
+
+
+
+
+
+.txtBox {
+	background:		#fff;
+	border:			1px solid #999999;
+	color:			#6C6752;
+	font-size:		1em;
+	height:			50px;
+	line-height:	        50px;
+	padding: 0px 0px;
+	width:			100px;
+
+}
+.txtBoxWide {
+	background:		#fff;
+	border:			1px solid #999999;
+	color:			#6C6752;
+	font-size:		1em;
+	height:			50px;
+	line-height:	        50px;
+	padding: 0px 0px;
+	width:			110px;
+
+}
+
+#header h1 {
+    margin: 0;
+    padding: 0;
+}
+#header h1 a {
+    background-color: #e4eee0;
+    border-bottom: 1px solid #666;
+    color: #222;
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 0;
+    text-align: center;
+    text-decoration: none;
+    width: 750px;
+
+}
+
+.search {
+    background-color: #FFFFFF;
+    border: 1px solid #999999;
+    color: #222222;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 0px;
+    padding: 12px 25px;
+    text-decoration: none;
+ 
+}
+
+.smButton {
+    background-color: #c987ba;;
+    border: 1px solid #999999;
+    color: #222222;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 0px;
+    padding: 4px 4px;
+    text-decoration: none;
+ 
+}
+
+
+.submitButton {
+    background-color: #c987ba;
+    border: 2px solid #999999;
+    color: #222222;
+    width:250px; 
+    font-size: 17px;
+    font-weight: bold;
+    text-decoration: none;
+ 
+}
+
+
+
+#header ul {
+    list-style: none;
+    margin: 10px;
+    padding: 0;
+}
+#header ul li a {
+    background-color: #FFFFFF;
+    border: 1px solid #999999;
+    color: #222222;
+    display: block;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: -1px;
+    padding: 12px 10px;
+    text-decoration: none;
+}
+
+#content, #sidebar {
+    padding: 10px;
+}
+
+#footer {
+    display: none;
+}
+
+#header h1 a {
+    text-shadow: 0px 1px 0px #383838;
+}
+#header ul li:first-child a {
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+}
+#header ul li:last-child a {
+    -webkit-border-bottom-left-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+}
