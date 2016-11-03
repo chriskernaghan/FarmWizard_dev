@@ -1,0 +1,71 @@
+td
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000
+}
+
+body
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000
+}
+
+.darkBlue
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 10px;
+	color: #001c4d
+}
+
+.darkBlueMid
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 12px;
+	color: #001c4d
+}
+
+.lightBlueHead
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 14px;
+	color: #005893
+}
+
+.lightBlue
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 10px;
+	color: #005893
+}
+
+a, a:link, a:visited, a:hover:visited
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 12px;
+	color: #001c4d;
+	text-decoration: none
+}
+
+a:hover
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 12px;
+	color: #001c4d;
+	text-decoration: underline
+}
+
+
+ul
+{
+	margin-left: 1 em;
+	padding-left: 1 em;
+	text-indent: 1 em;
+	list-style-image: url(bullit.gif);
+	list-style-type: disc;
+	list-style-position: inline;
+	margin-bottom : 8px;
+	margin-top : 8px;
+	color : #005893;
+}

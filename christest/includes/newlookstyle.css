@@ -1,0 +1,148 @@
+/*
+Theme Name: Farm Wizard
+Author: the team @eyesparks
+*/
+
+
+/* TABLE OF CONTENTS
+01 - Global Elements
+02 - Header
+03 - Main Content
+04 - Sidebars
+05 - Footer
+06 - Other Wordpress
+07 - Media Queries
+*/
+
+
+
+/* 01 - GLOBAL ELEMENTS & TEXT ---------------------------------------*/
+body {background:#efefef; font: 15px/1.4 'Roboto',sans-serif; font-weight:400; color:#303028; }
+
+
+hr { border: 0 #ccc solid; border-top-width: 1px;  clear: both; height: 0;  margin:30px 0; padding:0; }
+
+a { color:#72751f; font-weight:400; text-decoration: none; }
+a:hover { text-decoration: underline; color:#72751f; }
+
+p, dl, hr, ol, ul, pre, table, address, fieldset, figure { margin-bottom: 10px; }
+
+h1, h2, h3, h4, h5, h6	{font-weight:400;color:#72751f; margin:10px 0;}
+h1 { font-size: 24px; }
+h2 { font-size: 24px; }
+h3 { font-size: 18px; }
+h4 { font-size: 16px; }
+h5 { font-size: 16px; }
+h6 { font-size: 14px; }
+p  { font-size: 13px; }
+
+
+
+/* 02 - HEADER -------------------------------------------------------*/
+.topheader		{float: left; width:100%; background:#303028; padding:20px 0;}
+
+ul#mainnav		{float: left; width:100%; margin:5px 0 0 0; padding:0; list-style:none;}
+ul#mainnav li	{float: left; margin:0 0 0 29px; padding:0; font-size:16px; font-family: 'Roboto Condensed', sans-serif; font-weight:400;}
+ul#mainnav li a	{float: left; padding:8px 12px; color:#fff;}
+ul#mainnav li a:hover {background:#f7582d; text-decoration:none;}
+ul#mainnav li.current a {background:#4f4f49;}
+ul#mainnav li.highlight a {background:#f7582d; position:relative; z-index:20;}
+
+.breadheader	{float: left; width:100%; background:#607a40 url(/img/back2.jpg) no-repeat top center; padding:20px 0;}
+.breadheader h1	{color:#fff;}
+.breadheader h3	{color:#fff;}
+
+ul#bcrumb		{float: left; width:100%; margin:15px 0; padding:0; list-style:none;}
+ul#bcrumb li	{display:inline; margin:0 10px 0 0; padding:0; font-size:16px; color:#fff;}
+ul#bcrumb li a	{color:#fff; text-decoration: none;}
+ul#bcrumb li a:hover	{color:#fff; text-decoration: underline;}
+ul#bcrumb li.current{font-size:24px; font-weight:700;}
+
+
+
+/* 03 - MAIN CONTENT -------------------------------------------------*/
+.maincontent	{float: left; width: 100%; padding:40px 0;}
+.darkcontent	{float: left; width: 100%; padding:40px 0; background:#dddddd;}
+
+p.text-warning		{color:#c62353; background:#efdce1; padding:20px; margin-bottom:20px; border-radius:5px; }
+p.text-warning a	{font-weight:700; color:#c62353; }
+.close-warning img	{float: right; margin:0; padding:0;}
+
+ul.dashlist		{float:left; width:95%; margin:0; padding:0 5% 0 0; list-style:none; text-align: center;}
+ul.dashlist li	{float:left; margin:0 20px 20px 0; padding:0; font-size:14px; font-family: 'Roboto Condensed', sans-serif; font-weight:700;}
+ul.dashlist li a{float:left; margin:0; padding:8px 0; width:140px; background:#fff; color:#303028; border-radius:3px;}
+ul.dashlist li a:hover{background:#f7582d; text-decoration:none; color:#fff;}
+
+ul.dashdata		{float:left; width:100%; margin:0; padding:0; list-style:none;}
+ul.dashdata li	{float:left; width:80%; margin:0 0 20px 0; padding:15px 10%; background:#fff; font-size:14px; font-family: 'Roboto Condensed', sans-serif; font-weight:400;}
+ul.dashdata li img{float:left; margin:0 10px 0 0; width:50px; height:auto;}
+ul.dashdata span.desc	{font-size:14px; font-weight:400; color:#a3a59f; line-height:2;}
+ul.dashdata span.value	{font-size:28px; font-weight:700;} 
+
+.dashnews	{background:#fff; padding:15px 20px}
+.dashnews h3{margin-top:0;}
+.dashnews p a {font-weight: 700;}
+
+
+
+/* 04 - SIDEBARS -----------------------------------------------------*/
+
+
+
+
+/* 05 - FOOTER -------------------------------------------------------*/
+.mainfooter		{float: left; width:100%; background:#303028; padding:30px 0;}
+.mainfooter h6	{ margin:0;color:#fff;}
+
+ul#footnav		{ text-align:right;width:100%; margin:0; padding:0; list-style:none;}
+ul#footnav li	{display:inline; text-align:right; margin:0 0 0 20px; padding:0; font-size:14px; font-family: 'Roboto Condensed', sans-serif; font-weight:400;}
+ul#footnav li a	{color:#fff;}
+
+
+
+/*TABLES************/
+.tg  {border-collapse:collapse;border-spacing:0;border:1px solid #ccc;font-family: 'Roboto Condensed', sans-serif; width:99%; margin:20px 0;}
+.tg tr{border-bottom:1px solid #ccc;background-color:#fff;}
+.tg tr:hover { background-color: #eee; }
+.tg th{font-size:13px;font-weight:700;padding:10px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;background-color:#f7f6f6; text-align: left; vertical-align:top;}
+.tg td{font-size:13px;padding:10px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg td:hover{cursor:pointer;}
+.tg_stats  {border-collapse:collapse;border-spacing:0;font-family: 'Roboto Condensed', sans-serif; width:99%; }
+.tg_stats tr{border-bottom:1px solid #ccc;text-align:center;background-color:#fff;}
+.tg_stats tr:hover { background-color: #eee; }
+.tg_stats th{font-size:13px;font-weight:700;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;background-color:#f7f6f6; text-align: left; vertical-align:top;}
+.tg_stats td{font-size:13px;text-align:center;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+span.bgstatus	{padding:2px 4px; border-radius:2px; color:#fff;}
+span.bgstatus.served	{background-color:#72751f;}
+span.bgstatus.preheat	{background-color:#f7582d;}
+.btn-cond	{font-family: 'Roboto Condensed', sans-serif;}
+label	{font:12px; color:#5e605c;}
+
+/*PAGINATION************/
+.pagenavi {float:left; clear: both; border-right: 1px solid #ccc; font-size: 13px }
+.pagenavi a, .pagenavi span {float:left; text-decoration: none; border-top: 1px solid #ccc; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc; background:#FFF; padding: 5px 10px; margin:0; }
+.pagenavi a:hover { background: #ddd; }
+.pagenavi span.current { border: #222 solid 1px;  font-weight: bold; }
+
+
+/*DROP DOWN MENU************/
+#target1,
+#target2,
+#target3,
+#target4,
+#target5,
+#modal {display:none;}
+
+.black-top			{ float:left; width:100%; height: 100%; padding:0; background-color:rgba(0,0,0,0.3); position:fixed; overflow:visible; top:0; left:0; display: block; z-index:10;}
+.dropdownmenu		{ background-color:#f7582d; position:absolute; float:left; width:94%; top:80px; padding:30px 3% 35px 3%; z-index: 20; }
+.dropdownmenu ul	{ list-style: none; float: left; width:18%; margin:0 1%; padding:0 }
+.dropdownmenu ul li	{ margin:0 0 8px 0; padding:0; float: left; width:100%; font-family: 'Roboto Condensed', sans-serif;  font-weight:400; color:#fff; }
+.dropdownmenu ul li a{ font-weight:400; padding:0; margin:0; color:#fff; }
+.dropdownmenu ul li strong a{ font-weight:700; }
+
+
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px ) {
+	.dropdownmenu	{ width:80%; padding:30px 10% 35px 10%; }
+}
