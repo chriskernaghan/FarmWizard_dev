@@ -75,7 +75,7 @@
 
             <div align="center">
 
-                <a href="#" class="btn btn-primary waves-effect waves-light" onclick="checkInput();">Save AI Service</a>
+                <a href="#" class="btn btn-primary waves-effect waves-light fixed-button" onclick="checkInput();">Save AI Service</a>
             </div>
         </div>
     </div>

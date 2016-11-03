@@ -235,6 +235,16 @@ body.loginback{    background:red;
 			border-collapse: collapse !important;
 		}
 
+		/*Fixed Button*/
+
+		.fixed-button{
+			    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index:9999 !important;
+		}
+
 		/* Tile Navigation */
 
 		.all-tiles{
