@@ -19,6 +19,7 @@
 
     <script src="Script/jquery.min.js"></script>
     <script src="Script/jquery-ui.min.js"></script>
+    <script src="Script/balloon.min.js"></script>
     <script src="Script/materialize.min.js"></script>
     <script src="Script/toastr.min.js"></script>
     <script src="Script/HybridApp.js" type="text/javascript"></script>
